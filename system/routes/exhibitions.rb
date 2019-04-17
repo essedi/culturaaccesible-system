@@ -89,6 +89,7 @@ class App < Sinatra::Base
   end
 
   post '/api/exhibition/download' do
+    response.headers['Access-Control-Allow-Origin'] = '*'
     body = JSON.parse(request.body.read)
     exhibition_id = body['id']
     iso_code = body['iso_code']

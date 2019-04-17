@@ -1,6 +1,6 @@
 FROM ruby:2.4.2
 
-RUN apt-get update
+#RUN apt-get update
 
 ENV SYSTEM_MODE development
 ENV HOME=/opt/app/culturaaccesible-system

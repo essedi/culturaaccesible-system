@@ -22,6 +22,12 @@
                     Show
                 </label>
             </div>
+            <div class="checkbox">
+                <label for="unlocked">
+                    <input class="unlocked" type="checkbox" name="unlocked" checked="{{checkUnlock::change}}">
+                    Unlock
+                </label>
+            </div>
             <div class="form-group">
                 <label class="obligatory" for="name"><strong>Exhibition Name*</strong></label>
                 <input class="form-control" name="name" value="{{name::input}}">
@@ -96,6 +102,7 @@
                 submitDisabled: {type: Boolean, value: true},
 
                 checkShow: {type: Boolean, value: false},
+                checkUnlock: {type: Boolean, value: false},
 
                 exhibition: {type: Object, observer: 'storeId'},
 
@@ -183,6 +190,7 @@
                 data = {
                     id: this.exhibitionId,
                     show: this.checkShow,
+                    unlocked: this.checkUnlock,
                     name: this.name,
                     location: this.location,
                     museum_id: this.museumValue,
@@ -211,6 +219,7 @@
               this.image = this.edited.image;
               this.beacon = this.edited.beacon;
               document.getElementsByName("show")[0].checked = this.edited.show;
+              document.getElementsByName("unlocked")[0].checked = this.edited.unlocked;
               this.museumValue = this.edited.museum.id;
               this.general_description = this.edited.general_description;
               this.typeValue = this.edited.type;
