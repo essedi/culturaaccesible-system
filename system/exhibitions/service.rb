@@ -35,8 +35,12 @@ module Exhibitions
         Exhibitions::Repository.retrieve_translations(exhibition_id)
       end
 
+      def sort_list_beacon(children)
+         children.sort_by{ |child| child[:beacon].to_i }
+      end
+
       def sort_list(children)
-        children.sort_by { |child| child[:number] }
+        children.sort_by{ |child| child[:number] }
       end
 
       def retrieve_next_ordinal(exhibition_id, ordinal)

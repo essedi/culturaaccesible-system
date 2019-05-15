@@ -4,7 +4,8 @@ module Actions
       def retrieve_for_list(exhibition)
         order = Exhibitions::Service.retrieve_object(exhibition[:id]).order
         children = Items::Service.retrieve_by_parent(exhibition[:id], order)
-        children.map! do |item|
+        sorted_children = Exhibitions::Service.sort_list_beacon(children)
+        sorted_children.map! do |item|
           begin
             {
               id: item[:id],
@@ -17,8 +18,7 @@ module Actions
             next
           end
         end
-        children.reject!{ |child| child == nil }
-        sorted_children = Exhibitions::Service.sort_list(children)
+        sorted_children.reject!{ |child| child == nil }
         { id: exhibition[:id], name: exhibition[:name], creation_date: exhibition[:creation_date], :children => sorted_children }
       end
 
