@@ -34,10 +34,6 @@ class App < Sinatra::Base
     result.to_json
   end
 
-  get '/api/item/flush' do
-    return {valid: false}.to_json if !login? || retrieve_mode == 'production'
-    Items::Service.flush
-    {}
-  end
+
 
 end

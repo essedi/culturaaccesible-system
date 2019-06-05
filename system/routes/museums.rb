@@ -39,9 +39,5 @@ class App < Sinatra::Base
     result.to_json
   end
 
-  get '/api/museum/flush' do
-    return {valid: false}.to_json if !login? || retrieve_mode == 'production'
-    Museums::Service.flush
-    {}
-  end
+
 end

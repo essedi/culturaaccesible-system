@@ -98,9 +98,5 @@ class App < Sinatra::Base
     exhibition.to_json
   end
 
-  get '/api/exhibition/flush' do
-    return {valid: false}.to_json if !login?  || retrieve_mode == 'production'
-    Exhibitions::Service.flush
-    {}
-  end
+ 
 end
