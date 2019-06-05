@@ -56,6 +56,7 @@ El Museo de Geología del Departamento de Geología de la Universitat de Valenci
     def store_exhibition(museum_id)
       exhibition_data = {
         "show" => true,
+        "unlock" => false,
         "name" => "Cultura Accesible Geología",
         "museum_id" => museum_id,
         "general_description" => "Esta aplicación está creada y pensada para todos.",

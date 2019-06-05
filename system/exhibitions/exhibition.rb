@@ -8,6 +8,7 @@ module Exhibitions
     def initialize(data, id=nil, order=nil)
       @creation_date = data['creation_date'] || Time.now.utc
       @show = Defense.string_null_defense(data['show'])
+      @unlocked = Defense.string_null_defense(data['unlocked'])
       @name = Defense.string_null_defense(data['name'])
       @museum_id = Defense.string_null_defense(data['museum_id'])
       @general_description = Defense.string_null_defense(data['general_description'])
@@ -28,6 +29,7 @@ module Exhibitions
         creation_date: @creation_date,
         id: @id,
         show: @show,
+        unlocked: @unlocked,
         name: @name,
         museum_id: @museum_id,
         general_description: @general_description,

@@ -76,7 +76,13 @@ module Items
       end
 
       def update_translations(translations, item_id)
-        translations.map! { |item| Items::Repository.update_translation(item, item_id).serialize }
+        translations.map! { |item|
+            if item['id'] != ''
+                Items::Repository.update_translation(item, item_id).serialize
+            else
+                Items::Repository.store_translation(item, item_id).serialize
+            end
+         }
       end
 
       def flush
