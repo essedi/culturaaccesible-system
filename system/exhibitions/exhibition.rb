@@ -16,6 +16,10 @@ module Exhibitions
       @date_finish = Defense.string_null_defense(data['date_finish'])
       @type = Defense.string_null_defense(data['type'])
       @beacon = Defense.string_null_defense(data['beacon'])
+      @locationType = Defense.string_null_defense(data['locationType'])
+      @mapLink = Defense.string_null_defense(data['mapLink'])
+      @lat = Defense.string_null_defense(data['lat'])
+      @lng = Defense.string_null_defense(data['lng'])
       @description = Defense.string_null_defense(data['description'])
       @image = Defense.string_null_defense(data['image'])
       @id = id || generate_id
@@ -36,7 +40,11 @@ module Exhibitions
         date_start: @date_start,
         date_finish: @date_finish,
         type: @type,
+        lat: @lat,
+        lng: @lng,
         beacon: @beacon,
+        locationType: @locationType,
+        mapLink: @mapLink,
         description: @description,
         image: @image,
         order: @order.serialize,

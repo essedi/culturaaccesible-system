@@ -20,7 +20,12 @@
                         <span>From: {{exhibition.date_start}}</span>
                         <span>To: {{exhibition.date_finish}}</span>
                     </div>
+                    
+                    <div>Location Type: {{ exhibition.locationType }}</div>
                     <div>Beacon number: {{exhibition.beacon}}</div>
+                    <div>lat: {{ exhibition.lat }}</div>
+                    <div>lng: {{ exhibition.lng }}</div>
+                    
                     <div>Extended description: {{exhibition.description}}</div>
                     <div>Image: {{exhibition.image}}</div>
                     <div class="image">
@@ -46,6 +51,8 @@
     <script>
         Polymer({
             is: 'cuac-exhibition-info',
+            
+           
 
             properties: {
 

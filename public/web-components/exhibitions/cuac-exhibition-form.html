@@ -14,7 +14,18 @@
             label{
               font-weight: normal;
             }
+            
+             #map {
+                height: 400px;
+                width: 100%;
+                background-color: gray;
+              }
+            
+
         </style>
+       <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBr1tQOWHPEcu2Um8wBynxU_70j9aNKsoM&callback=initMap" async defer></script> -->
+     
+         
         <form class$="form {{formVisibility}}">
             <div class="checkbox">
                 <label for="show">
@@ -62,10 +73,32 @@
                     <input class="form-group" name="dateFinish" type="date" value="{{dateFinish::input}}">
                 </div>
             </div>
+              
+           
             <div class="form-group">
-                <label for="beacon">Beacon number</label>
+                <label for="locationType">Location Type</label>
+                <select class="form-control" id="locationType" name="locationType" value="{{ locationType::change }}">
+                    <option selected disabled>Select an option</option>
+                    <option value="gps">GPS</option>
+                    <option value="beacon">Beacon</option>
+                </select>
+            </div>
+      
+              
+          <!-- <div class$="form-group {{coordsClass}}">
+                <div id="map"></div>
+            </div> -->
+            
+            <div class$="form-group {{beaconClass}}" >
+                <label for="beacon">Beacon number </label>
                 <input class="form-control" name="beacon" value="{{beacon::input}}">
             </div>
+              
+            <div class$="form-group {{coordsClass}}">
+                <label for="mapLink">Map Link</label>
+                <input id="mapLink" class="form-control" name="mapLink" value="{{mapLink::input}}">
+            </div>
+              
             <div class$="form-group">
                 <label for="image">Image link</label>
                 <input class="form-control" name="image" value="{{image::input}}">
@@ -81,17 +114,58 @@
         </form>
     </template>
 
+    
     <script>
+        
+        
+     /* var map;
+    var latitude = 39.4697500;
+     var longitude = -0.3773900;
+
+      
+     function initMap() {
+   
+        var myLatLng = {lat:  39.4697500, lng: -0.3773900 };
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+        
+        
+        google.maps.event.addListener(map, 'click', function(event) {
+          myLatLng = event.latLng;
+          latitude = event.latLng.lat();
+          longitude = event.latLng.lng();
+
+        });
+  
+       }*/
+       
+    
         Polymer({
             is: 'cuac-exhibition-form',
 
             ready: function() {
+                
                 urlLocation = window.location.pathname;
-                if ('/' == urlLocation){
+                
+                
+        
+                if ('/' == urlLocation)
+                {
                     this.formVisibility = 'hide';
-                }else{
+                }else
+                {
                     this.formVisibility = 'show';
                 }
+                
             },
 
             properties: {
@@ -102,14 +176,15 @@
                 submitDisabled: {type: Boolean, value: true},
 
                 checkShow: {type: Boolean, value: false},
+                
                 checkUnlock: {type: Boolean, value: false},
-
+                
                 exhibition: {type: Object, observer: 'storeId'},
 
                 edited: {type: Object, observer: 'fillForm'},
 
                 exhibitionId: {type: String},
-
+                
                 image: {
                   type: String,
                   observer: 'previewImage'
@@ -132,15 +207,29 @@
                 dateFinish: {},
 
                 beacon: {},
+                
+                mapLink: {type: String},
+                
+               /* lat: {  value: latitude },
+                
+                lng: { value: longitude },*/
 
-                description: {}
+                description: {},
+                
+                locationType: {type: String , observer: 'locationTypeAction'}
+
             },
+            
+     
 
-            storeId: function() {
+            storeId: function() 
+            {
                 this.exhibitionId = this.exhibition.id;
             },
-
-            checkName: function() {
+            
+           
+            checkName: function() 
+            {
                 this.nameLength = this.name.length;
             },
 
@@ -155,7 +244,24 @@
                     this.formVisibility = 'hide';
                 }
             },
+            
+           
 
+            locationTypeAction: function() {
+                
+              if(this.locationType == 'beacon')
+              {
+                  this.coordsClass = 'hide';
+                  this.beaconClass = 'show';
+              }
+              else if(this.locationType == 'gps')
+              {
+                  this.coordsClass = 'show';
+                  this.beaconClass = 'hide'; 
+              }
+            },
+            
+            
             isSubmittable: function() {
                 var nameLength = this.nameHasValue() ? 0 : this.name.length;
                 var museumsLength = this.museumHasValue() ? 0 : this.museumValue.length;
@@ -187,11 +293,22 @@
             },
 
             collectData: function() {
+                
+               var regex = new RegExp('@(.*),(.*),');
+               var lon_lat_match = this.mapLink.match(regex);
+
+               var lon1 = lon_lat_match[1];
+               var lat1 = lon_lat_match[2];
+               
+                
                 data = {
                     id: this.exhibitionId,
                     show: this.checkShow,
                     unlocked: this.checkUnlock,
                     name: this.name,
+                    mapLink: this.mapLink,
+                    lat: lat1,
+                    lng: lon1,
                     location: this.location,
                     museum_id: this.museumValue,
                     general_description: this.general_description,
@@ -199,11 +316,14 @@
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
+                    locationType: this.locationType,
                     description: this.description,
                     image: this.image,
                     iso_codes: this.$.languages.collectLocaleData(),
                     translations: this.getTranslations()
                 };
+                
+                console.log(data, "dataaaa");
                 return data;
             },
 
@@ -218,6 +338,8 @@
               this.description = this.edited.description;
               this.image = this.edited.image;
               this.beacon = this.edited.beacon;
+              this.locationType = this.edited.locationType;
+              this.mapLink = this.edited.mapLink;
               document.getElementsByName("show")[0].checked = this.edited.show;
               document.getElementsByName("unlocked")[0].checked = this.edited.unlocked;
               this.museumValue = this.edited.museum.id;
@@ -296,8 +418,13 @@
                 if(this.$.languages.$.catala.visiblelang === "true") translations.push(this.$.languages.$.catala.collectData());
                 return translations;
             }
+            
+            
 
 
         });
+        
+       
+
     </script>
 </dom-module>

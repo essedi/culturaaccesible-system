@@ -33,6 +33,7 @@ module Actions
               author: item[:author] || '',
               date: item[:date] || '',
               beacon: item[:beacon] || '',
+              coords: item[:coords] || '',
               description: item[:description] || '',
               image: item[:image] || '',
               video: item[:video] || '',
