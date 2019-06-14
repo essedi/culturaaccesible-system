@@ -140,7 +140,10 @@
                     </div>
                     
                       <div class="col-md-12">
+                       
                         <div class$="form-group {{coordsClass}}">
+                              <h3>Ubicación</h3>
+                               <hr>
                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
                                <div id="map" ></div>
                                <p id="lat1" style="display:none"> {{ lat }}  </p>
@@ -183,7 +186,7 @@ var longitude ;
            
         map = new google.maps.Map(document.getElementById('map'), {
           center: myCenter ,
-          zoom: 11,
+          zoom: 13,
           mapTypeId: 'roadmap'
         });
         
