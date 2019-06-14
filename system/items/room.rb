@@ -6,6 +6,8 @@ module Items
       @creation_date = Time.now.utc
       @name = null_defense(data['name'])
       @beacon = null_defense(data['beacon'])
+      @lat = Defense.string_null_defense(data['lat'])
+      @lng = Defense.string_null_defense(data['lng'])
       @description = null_defense(data['description'])
       @image = null_defense(data['image'])
       @video = null_defense(data['video'])
@@ -19,6 +21,8 @@ module Items
       {
         name: @name,
         beacon: @beacon,
+        lat: @lat,
+        lng: @lng,
         description: @description,
         image: @image,
         video: @video,

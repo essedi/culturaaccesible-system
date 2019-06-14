@@ -1,7 +1,7 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
-
 <dom-module id="cuac-item-form">
-    <template>
+    
+    <template >
         <style>
             label{
               font-weight: normal;
@@ -13,8 +13,89 @@
             .hide {
                 display: none;
             }
+             #map {
+                height: 400px;
+                width: 100%;
+                background-color: gray;
+              }
+            #description {
+              font-family: Roboto;
+              font-size: 15px;
+              font-weight: 300;
+            }
+
+            #infowindow-content .title {
+              font-weight: bold;
+            }
+
+            #infowindow-content {
+              display: none;
+            }
+
+            #map #infowindow-content {
+              display: inline;
+            }
+
+            .pac-card {
+              margin: 10px 10px 0 0;
+              border-radius: 2px 0 0 2px;
+              box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              outline: none;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+              background-color: #fff;
+              font-family: Roboto;
+            }
+
+            #pac-container {
+              padding-bottom: 12px;
+              margin-right: 12px;
+            }
+
+            .pac-controls {
+              display: inline-block;
+              padding: 5px 11px;
+            }
+
+            .pac-controls label {
+              font-family: Roboto;
+              font-size: 13px;
+              font-weight: 300;
+            }
+
+            #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                padding: 0 11px 0 13px;
+                text-overflow: ellipsis;
+                width: 400px;
+                height: 40px;
+                margin-top: 10px;
+            }
+
+            #pac-input:focus {
+              border-color: #4d90fe;
+            }
+
+            #title {
+              color: #fff;
+              background-color: #4d90fe;
+              font-size: 25px;
+              font-weight: 500;
+              padding: 6px 12px;
+            }
+            #target {
+              width: 345px;
+            }
         </style>
+        
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjq0KXxeix8bx3mR8trcLVm8nNaEjHnP8&libraries=places&callback=initMap" async defer></script>
+
         <cuac-room-alert id="alert"></cuac-room-alert>
+        
         <form class$="form {{formVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -30,13 +111,11 @@
                             <label for="number">Number</label>
                             <input class="form-control" name="number" value="{{number::input}}" on-keyup="numberValidation"></input>
                         </div>
-                        <div class="form-group">
+                        <div class$="form-group {{beaconClass}}" >
                             <label for="beacon">Beacon Number</label>
                             <input class="form-control" name="beacon" value="{{beacon::input}}"></input>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
+                         <div class="form-group">
                             <label for="name"><strong>Name*</strong></label>
                             <input class="form-control" name="name" value="{{name::input}}" on-keyup="saveActivation" autofocus></input>
                         </div>
@@ -48,6 +127,9 @@
                             <label for="date">Date</label>
                             <input class="form-control" maxlength="4" name="date" value="{{date::input}}" disabled="{{disableItemInput}}" type="text"></input>
                         </div>
+                    </div>
+                    
+                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="image">Image link</label>
                             <input class="form-control" name="image" value="{{image::input}}">
@@ -56,6 +138,16 @@
                             <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
                         </div>
                     </div>
+                    
+                      <div class="col-md-12">
+                        <div class$="form-group {{coordsClass}}">
+                               <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+                               <div id="map" ></div>
+                               <p id="lat1" style="display:none"> {{ lat }}  </p>
+                               <p id="lng1" style="display:none"> {{ lng }}  </p>
+                        </div>
+                     </div>
+                    
                     <template is="dom-repeat" items={{languages}}>
                         <div class="col-md-12">
                             <cuac-item-languages language={{item}} translations="{{translations}}" class="translations"></cuac-item-languages>
@@ -68,16 +160,133 @@
             </div>
         </form>
 
+    <slot></slot>
     </template>
-
     <script>
+  
+    
+function initMap() {} // now it IS a function and it is in global
+var latitude ;
+var longitude ;
+
+
+(function() {
+    
+    var map;
+    var marker;
+    var infowindow;
+    var input ;
+    
+       initMap = function() {
+           
+        var myCenter = new google.maps.LatLng(39.46730050372269, -0.37870260754164065);
+           
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myCenter ,
+          zoom: 11,
+          mapTypeId: 'roadmap'
+        });
+        
+            
+        window.onload = function() {
+
+            var lat1 = document.getElementById('lat1').innerHTML;
+            var lng1 = document.getElementById('lng1').innerHTML;
+
+            console.log(lat1, "lat1lat1");
+
+            if(lat1 && lng1){
+
+               myCenter = new google.maps.LatLng(lat1, lng1);
+
+               marker = new google.maps.Marker({
+                   position: myCenter,
+                   map: map,
+                 });
+            }
+        };
+
+
+        google.maps.event.addListener(map, 'click', function(event) {
+
+           placeMarker(event.latLng);
+           window.latitude = event.latLng.lat();
+           window.longitude = event.latLng.lng();
+
+         });
+         
+        
+         
+        // Create the search box and link it to the UI element.
+        input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+         
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+          });
+          map.fitBounds(bounds);
+        });
+      }
+
+    
+    function placeMarker(location) {
+        
+        if (!marker || !marker.setPosition) {
+          marker = new google.maps.Marker({
+            position: location,
+            map: map,
+          });
+        } else {
+          marker.setPosition(location);
+        }
+        if (!!infowindow && !!infowindow.close) {
+          infowindow.close();
+        }
+        infowindow = new google.maps.InfoWindow({
+          content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
+        });
+
+        infowindow.open(map, marker);
+        google.maps.event.addDomListener(window, 'load', initMap);
+
+    }
+
+
+      
         Polymer({
             is: 'cuac-item-form',
 
             properties: {
 
                 formVisibility: { type: String },
-
+          
                 disableItemInput: { type: Boolean, value: false },
 
                 disableSaveButton: { type: Boolean },
@@ -91,7 +300,7 @@
                 number: {type: Number },
 
                 beacon: { type: String },
-
+                
                 image: {
                   type: String,
                   observer: 'previewImage'
@@ -119,8 +328,22 @@
 
                 type: { type: String, value: 'scene'},
 
-                translations: { type: Array }
+                translations: { type: Array },
+                
+               lng: {
+                  type: Number,
+                  value: window.longitude 
+                },
+
+                lat: {
+                  type: Number,
+                  value: window.latitude
+                }
+          
             },
+            
+
+          //--------------------------------------
 
             roomToggle: function(event) {
                 if (event.target.checked) {
@@ -156,6 +379,10 @@
             },
 
             collectData: function() {
+                
+                 console.log(window.latitude, "lat1");
+                 console.log(latitude, "lat1");
+
                 var translations = this.retrieveTranslations();
                 data = {
                     name: this.name,
@@ -166,6 +393,8 @@
                     last_number: this.lastNumber || '',
                     beacon: this.beacon,
                     image: this.image,
+                    lat: window.latitude ,
+                    lng: window.longitude ,
                     parent_id: this.parentId,
                     parent_class: this.parentClass,
                     exhibition_id: this.exhibition.id,
@@ -177,12 +406,41 @@
             },
 
             fillForm: function() {
+
+              if(this.exhibition){
+                  
+                 if(this.exhibition.locationType == "gps")
+                 {
+
+                   this.coordsClass = 'show';
+                   this.beaconClass = 'hide';
+                   
+                 }else{
+                     
+                   this.coordsClass = 'hide';
+                   this.beaconClass = 'show';
+
+                 }
+              }  
+              console.log(this.edited.lat , "lat");
+              console.log(this.edited.lng , "lng");
+              
+            
+
+              this.beacon = this.edited.beacon;
+             // this.lat= this.edited.lat,
+             // this.lng= this.edited.lng,
+             
+             
+
+              this.lat = this.edited.lat ,
+              this.lng = this.edited.lng ,
+                    
               this.name = this.edited.name;
               this.number = this.edited.number;
               this.description = this.edited.description;
               this.image = this.edited.image;
               this.video = this.edited.video;
-              this.beacon = this.edited.beacon;
               this.lastNumber = this.edited.number;
               this.disableSaveButton = false;
               this.editId = this.edited.id;
@@ -236,5 +494,7 @@
             }
 
         });
+  
+  })();
     </script>
 </dom-module>

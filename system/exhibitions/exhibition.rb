@@ -17,7 +17,6 @@ module Exhibitions
       @type = Defense.string_null_defense(data['type'])
       @beacon = Defense.string_null_defense(data['beacon'])
       @locationType = Defense.string_null_defense(data['locationType'])
-      @mapLink = Defense.string_null_defense(data['mapLink'])
       @lat = Defense.string_null_defense(data['lat'])
       @lng = Defense.string_null_defense(data['lng'])
       @description = Defense.string_null_defense(data['description'])
@@ -44,7 +43,6 @@ module Exhibitions
         lng: @lng,
         beacon: @beacon,
         locationType: @locationType,
-        mapLink: @mapLink,
         description: @description,
         image: @image,
         order: @order.serialize,
