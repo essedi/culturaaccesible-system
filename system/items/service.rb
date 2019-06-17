@@ -54,6 +54,8 @@ module Items
             type: item[:type],
             beacon: item[:beacon],
             author: item[:author] || '',
+            lat: item[:lat] || '',
+            lng: item[:lng] || '',
             date: item[:date] || '',
             image: item[:image] || '',
             video: item[:video] || '',
