@@ -146,8 +146,8 @@
                                <hr>
                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
                                <div id="map" ></div>
-                               <p id="lat1" style="display:none"> {{ lat }}  </p>
-                               <p id="lng1" style="display:none"> {{ lng }}  </p>
+                               <p id="lat1" > lat= {{ lat }}  </p>
+                               <p id="lng1">lng= {{ lng }}  </p>
                         </div>
                      </div>
                     
@@ -196,10 +196,10 @@ var longitude ;
             var lat1 = document.getElementById('lat1').innerHTML;
             var lng1 = document.getElementById('lng1').innerHTML;
 
-            console.log(lat1, "lat1lat1");
 
             if(lat1 && lng1){
-
+                
+               console.log(lat1, "lat1lat1");
                myCenter = new google.maps.LatLng(lat1, lng1);
 
                marker = new google.maps.Marker({
@@ -383,11 +383,28 @@ var longitude ;
 
             collectData: function() {
                 
-                 console.log(window.latitude, "lat1");
-                 console.log(latitude, "lat1");
+                 if(this.exhibition){
+                  
+                 if(this.exhibition.locationType == "gps")
+                 {
+
+                   this.coordsClass = 'show';
+                   this.beaconClass = 'hide';
+                   
+                 }else{
+                     
+                   this.coordsClass = 'hide';
+                   this.beaconClass = 'show';
+
+                 }
+              }  
+              
 
                 var translations = this.retrieveTranslations();
                 data = {
+                    
+                    lat: window.latitude || this.lat,
+                    lng: window.longitude || this.lng,
                     name: this.name,
                     room: this.room,
                     author: this.author,
@@ -396,8 +413,6 @@ var longitude ;
                     last_number: this.lastNumber || '',
                     beacon: this.beacon,
                     image: this.image,
-                    lat: window.latitude ,
-                    lng: window.longitude , 
                     parent_id: this.parentId,
                     parent_class: this.parentClass,
                     exhibition_id: this.exhibition.id,
@@ -425,10 +440,10 @@ var longitude ;
 
                  }
               }  
-              this.beacon = this.edited.beacon;
-              //this.lat = this.edited.lat ,
-              //this.lng = this.edited.lng ,
-                    
+              
+              this.lat = this.edited.lat;
+              this.lng = this.edited.lng;
+              this.beacon = this.edited.beacon;   
               this.name = this.edited.name;
               this.number = this.edited.number;
               this.description = this.edited.description;
