@@ -146,8 +146,8 @@
                                <hr>
                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
                                <div id="map" ></div>
-                               <p id="lat1" > lat= {{ lat }}  </p>
-                               <p id="lng1">lng= {{ lng }}  </p>
+                               <span id="lat1" value="{{ lat }}"  > lat= {{ lat }}  </span> 
+                               <span id="lng1" value="{{ lng }}" > lng= {{ lng }}  </span>
                         </div>
                      </div>
                     
@@ -173,42 +173,40 @@ var latitude ;
 var longitude ;
 
 
+
 (function() {
     
     var map;
     var marker;
     var infowindow;
     var input ;
-    
-       initMap = function() {
+
+        
+        initMap = function() {
            
-        var myCenter = new google.maps.LatLng(39.46730050372269, -0.37870260754164065);
-           
+        var myCenter = new google.maps.LatLng("39.46730050372269", "-0.37870260754164065");
+
         map = new google.maps.Map(document.getElementById('map'), {
           center: myCenter ,
           zoom: 13,
           mapTypeId: 'roadmap'
         });
         
-            
-        window.onload = function() {
+              
 
-            var lat1 = document.getElementById('lat1').innerHTML;
-            var lng1 = document.getElementById('lng1').innerHTML;
+       window.onload = function() {
 
+            var lat1 = document.getElementById('lat1').value;
+            var lng1 = document.getElementById('lng1').value;
 
             if(lat1 && lng1){
-                
-               console.log(lat1, "lat1lat1");
-               myCenter = new google.maps.LatLng(lat1, lng1);
-
-               marker = new google.maps.Marker({
-                   position: myCenter,
-                   map: map,
-                 });
-            }
-        };
-
+            marker = new google.maps.Marker({
+                position: {lat : lat1 , lng: lng1 },
+                map: map,
+              });
+                          
+           }
+       };
 
         google.maps.event.addListener(map, 'click', function(event) {
 
@@ -218,7 +216,6 @@ var longitude ;
 
          });
          
-        
          
         // Create the search box and link it to the UI element.
         input = document.getElementById('pac-input');
@@ -440,7 +437,7 @@ var longitude ;
 
                  }
               }  
-              
+            
               this.lat = this.edited.lat;
               this.lng = this.edited.lng;
               this.beacon = this.edited.beacon;   
