@@ -26,18 +26,26 @@
      
          
         <form class$="form {{formVisibility}}">
-            <div class="checkbox">
-                <label for="show">
-                    <input class="show" type="checkbox" name="show" checked="{{checkShow::change}}">
+              
+            <div class="checkbox" >
+                <label style="padding-right: 30px" for="show">
+                    <input type="checkbox" name="show" checked="{{show::change}}">
                     Show
                 </label>
-            </div>
-            <div class="checkbox">
-                <label for="unlocked">
-                    <input class="unlocked" type="checkbox" name="unlocked" checked="{{checkUnlock::change}}">
+           
+                <label style="padding-right: 30px" for="unlocked">
+                    <input  type="checkbox" name="unlocked" checked="{{unlocked::change}}">
                     Unlock
                 </label>
+           
+                <label style="padding-right: 30px" for="premium">
+                    <input  type="checkbox" name="premium" value="0" checked="{{premium::change}}" >
+                    Premium 
+                </label>
             </div>
+              
+            <hr>
+
             <div class="form-group">
                 <label class="obligatory" for="name"><strong>Exhibition Name*</strong></label>
                 <input class="form-control" name="name" value="{{name::input}}">
@@ -73,8 +81,7 @@
                 </div>
             </div>
               
-           
-            <div class="form-group">
+            <div class="form-group" >
                 <label for="locationType">Location Type</label>
                 <select class="form-control" id="locationType" name="locationType" value="{{ locationType::change }}">
                     <option selected disabled>Select an option</option>
@@ -82,11 +89,13 @@
                     <option value="beacon">Beacon</option>
                 </select>
             </div>
-      
+              
+           
+           
 
             <div class$="form-group {{beaconClass}}" >
                 <label for="beacon">Beacon number </label>
-                <input class="form-control" name="beacon" value="{{beacon::input}}">
+                <input class="form-control" name="beacon" value="{{beacon::input}}" >
             </div>
 
             <div class$="form-group">
@@ -134,10 +143,12 @@
 
                 submitDisabled: {type: Boolean, value: true},
 
-                checkShow: {type: Boolean, value: false},
+                show: {type: Boolean, value: false},
                 
-                checkUnlock: {type: Boolean, value: false},
+                unlocked: {type: Boolean, value: false},
                 
+                premium :{type: Boolean , value: false},
+
                 exhibition: {type: Object, observer: 'storeId'},
 
                 edited: {type: Object, observer: 'fillForm'},
@@ -156,7 +167,7 @@
                 museumValue: {observer: 'isSubmittable'},
 
                 museums: {type: Array},
-
+                
                 general_description: {},
 
                 typeValue: {},
@@ -173,8 +184,7 @@
 
             },
             
-     
-
+         
             storeId: function() 
             {
                 this.exhibitionId = this.exhibition.id;
@@ -248,8 +258,8 @@
                
                 data = {
                     id: this.exhibitionId,
-                    show: this.checkShow,
-                    unlocked: this.checkUnlock,
+                    show: this.show,
+                    unlocked: this.unlocked ,
                     name: this.name,
                     location: this.location,
                     museum_id: this.museumValue,
@@ -258,6 +268,7 @@
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
+                    premium: this.premium,
                     locationType: this.locationType,
                     description: this.description,
                     image: this.image,
@@ -281,6 +292,9 @@
               this.description = this.edited.description;
               this.image = this.edited.image;
               this.beacon = this.edited.beacon;
+              this.premium= this.edited.premium,
+              this.show= this.edited.show,
+              this.unlocked= this.edited.unlocked ,
               this.locationType = this.edited.locationType;
               document.getElementsByName("show")[0].checked = this.edited.show;
               document.getElementsByName("unlocked")[0].checked = this.edited.unlocked;
