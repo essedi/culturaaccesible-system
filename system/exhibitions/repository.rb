@@ -89,9 +89,6 @@ module Exhibitions
         exhibition.order.next_child(ordinal)
       end
 
-      def flush
-        connection.exhibitions.delete_many
-      end
 
       def update_exhibition(exhibition)
         document = exhibition.serialize

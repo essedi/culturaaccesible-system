@@ -2,6 +2,7 @@
 
 <dom-module id="cuac-museum-view">
     <template>
+        
         <style>
             .panel.show {
                 display: 'block';
@@ -10,6 +11,8 @@
                 display: 'none';
             }
         </style>
+        
+
         <div class$="view {{visibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">Info</div>
@@ -49,18 +52,24 @@
                     </template>
                 </div>
             </div>
-
+             
             <cuac-edit-button></cuac-edit-button>
+            <cuac-delete-button item="{{museumData}}"></cuac-delete-button>
         </div>
+        
+            <cuac-museum-delete-alert id="alert" museum="{{museumData}}"></cuac-museum-delete-alert>
+
     </template>
 
     <script>
+        
+        
         Polymer({
             is: 'cuac-museum-view',
 
             properties: {
                 visibility: {type: String, value: 'hide'},
-                museumData: {type: Object}
+                museumData: {type: Object, reflectToAttribute: true}
             }
         });
     </script>

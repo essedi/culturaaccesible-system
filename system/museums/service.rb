@@ -16,6 +16,11 @@ module Museums
         museum = Museums::Repository.choose_action(museum_data)
         museum.serialize
       end
+      
+      def delete(id)
+        museum = Museums::Repository.delete(id)
+        museum.serialize
+      end
 
       def store_translations(data_translations, museum_id)
         Museums::Repository.translation_choose_action(data_translations, museum_id)

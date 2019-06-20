@@ -44,6 +44,14 @@
                 </label>
             </div>
               
+              
+              
+            <div class$="form-group {{premiumClass}}" >
+                <label for="productId"><strong>Product Id</strong></label>
+                <input class="form-control" name="productId" value="{{productId::input}}">
+            </div>
+              
+              
             <hr>
 
             <div class="form-group">
@@ -95,7 +103,7 @@
 
             <div class$="form-group {{beaconClass}}" >
                 <label for="beacon">Beacon number </label>
-                <input class="form-control" name="beacon" value="{{beacon::input}}" >
+                <input class="form-control" type="number" name="beacon" value="{{beacon::input}}" >
             </div>
 
             <div class$="form-group">
@@ -147,7 +155,7 @@
                 
                 unlocked: {type: Boolean, value: false},
                 
-                premium :{type: Boolean , value: false},
+                premium :{type: Boolean , value: false, observer: 'premiumAction'},
 
                 exhibition: {type: Object, observer: 'storeId'},
 
@@ -179,7 +187,9 @@
                 beacon: {},
 
                 description: {},
-                
+
+                productId: { type: String  },
+
                 locationType: {type: String , observer: 'locationTypeAction'}
 
             },
@@ -188,6 +198,18 @@
             storeId: function() 
             {
                 this.exhibitionId = this.exhibition.id;
+            },
+            
+            premiumAction: function()
+            {
+                if(this.premium == true)
+              {
+                  this.premiumClass = 'show';
+              }
+              else if(this.premium == false)
+              {
+                  this.premiumClass = 'hide'; 
+              } 
             },
             
            
@@ -262,6 +284,7 @@
                     unlocked: this.unlocked ,
                     name: this.name,
                     location: this.location,
+                    productId: this.productId,
                     museum_id: this.museumValue,
                     general_description: this.general_description,
                     type: this.typeValue,
@@ -294,6 +317,7 @@
               this.beacon = this.edited.beacon;
               this.premium= this.edited.premium,
               this.show= this.edited.show,
+              this.productId = this.edited.productId,
               this.unlocked= this.edited.unlocked ,
               this.locationType = this.edited.locationType;
               document.getElementsByName("show")[0].checked = this.edited.show;

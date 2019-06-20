@@ -58,6 +58,15 @@ module Museums
         translations
       end
 
+      def delete(id)
+        museum_data = retrieve(id)
+        document = museum_data.serialize
+        
+        connection.exhibitions.delete_many({museum_id: id})
+        connection.museums.delete_one({ id: document[:id] })
+      end
+
+
       def all(iso_code)
         museums_data = connection.museums.find()
         museums_data.map { |data| Museums::Museum.from_bson(data, data['id']).serialize }
@@ -66,10 +75,6 @@ module Museums
           museum[:info][:description] = set_translation(museum_translation) unless museum_translation.nil?
           museum
         end
-      end
-
-      def flush
-        connection.museums.delete_many
       end
 
       private
@@ -85,6 +90,7 @@ module Museums
         translation_museum = Museums::Translation.new(data, museum_id).serialize
         connection.museum_translations.insert_one(translation_museum)
         translation_museum
+        
       end
 
       def update_translation(translation)
@@ -92,6 +98,7 @@ module Museums
         Museums::Translation.from_bson(updated_translation, updated_translation['museum_id'], updated_translation['id']).serialize
       end
 
+      
       def update(museum_data)
         museum = Museums::Museum.new(museum_data, museum_data['id'])
         document = museum.serialize

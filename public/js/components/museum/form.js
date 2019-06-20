@@ -164,7 +164,9 @@ Class('Museum.Form', {
     saveMuseum: function() {
         this.collectData();
         Bus.publish('museum.save', this.museumData);
-        this.hide();
+        window.location = '/museum';
+
+        //this.hide();
     },
 
     collectData: function() {

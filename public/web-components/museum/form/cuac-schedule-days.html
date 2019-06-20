@@ -30,16 +30,26 @@
 
             checkAllDays: function() {
                 this.selection = this.week;
-                this.checked = true;
+                 if(this.checked == false)
+                {
+                    this.checked = true;
+                     
+                }else
+                {
+                    this.checked = false;
+
+                }
             },
 
             updateSelection: function(event) {
                 if (event.target.checked) {
                     this.selection.push(event.target.name);
+                    
                 } else {
                     var index = this.selection.indexOf(event.target.name);
                     this.selection.splice(index, 1);
                 }
+
                 this.polymerWorkaround(this.selection);
             },
 

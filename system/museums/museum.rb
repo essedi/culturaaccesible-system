@@ -2,6 +2,7 @@ module Museums
   class Museum
     attr_reader :name, :id
 
+
     DEFAULT_ISO_CODE = ['es']
 
     def initialize(data, id=nil)
@@ -27,6 +28,8 @@ module Museums
         iso_codes: @iso_codes
       }
     end
+    
+ 
 
     def self.from_bson(bson, id)
       Museums::Museum.new(bson, id)

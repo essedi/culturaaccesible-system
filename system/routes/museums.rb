@@ -15,6 +15,13 @@ class App < Sinatra::Base
     result[:translations] = translations
     result.to_json
   end
+  
+  post '/api/museum/delete' do
+    museum = JSON.parse(request.body.read)
+    Museums::Service.delete(museum['id'])
+    { message: 'Museum has been deleted' }.to_json
+  end
+  
 
   post '/api/museum/retrieve' do
     response.headers['Access-Control-Allow-Origin'] = '*'

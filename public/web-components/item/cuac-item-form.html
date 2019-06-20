@@ -113,7 +113,7 @@
                         </div>
                         <div class$="form-group {{beaconClass}}" >
                             <label for="beacon">Beacon Number</label>
-                            <input class="form-control" name="beacon" value="{{beacon::input}}"></input>
+                            <input class="form-control" type="number" name="beacon" value="{{beacon::input}}"></input>
                         </div>
                          <div class="form-group">
                             <label for="name"><strong>Name*</strong></label>
@@ -125,7 +125,7 @@
                         </div>
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input class="form-control" maxlength="4" name="date" value="{{date::input}}" disabled="{{disableItemInput}}" type="text"></input>
+                            <input class="form-control" maxlength="4" type="date" name="date" value="{{date::input}}" disabled="{{disableItemInput}}" type="text"></input>
                         </div>
                     </div>
                     
@@ -182,21 +182,31 @@ var longitude ;
 
         
         initMap = function() {
-           
-        var myCenter = new google.maps.LatLng("39.46730050372269", "-0.37870260754164065");
-
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: myCenter ,
-          zoom: 13,
-          mapTypeId: 'roadmap'
-        });
-        
+            
+            
+        window.onload = function() {  
               
-
-       window.onload = function() {
-
             var lat1 = document.getElementById('lat1').value;
             var lng1 = document.getElementById('lng1').value;
+            
+            var myCenter;
+                    
+            if(lat1 && lng1)
+            {
+              myCenter = new google.maps.LatLng(lat1 ,lng1);
+            
+            }else
+            {
+               myCenter = new google.maps.LatLng("39.46730050372269", "-0.37870260754164065");                
+            }
+
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: myCenter ,
+              zoom: 13,
+              mapTypeId: 'roadmap'
+            });
+        
+          
 
             if(lat1 && lng1){
             marker = new google.maps.Marker({
@@ -204,7 +214,7 @@ var longitude ;
                 map: map,
               });
            }
-       };
+     
 
         google.maps.event.addListener(map, 'click', function(event) {
 
@@ -214,7 +224,7 @@ var longitude ;
 
          });
          
-         
+        
         // Create the search box and link it to the UI element.
         input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
@@ -251,6 +261,7 @@ var longitude ;
           });
           map.fitBounds(bounds);
         });
+        };
       }
 
     

@@ -17,6 +17,7 @@ module Exhibitions
       @type = Defense.string_null_defense(data['type'])
       @beacon = Defense.string_null_defense(data['beacon'])
       @premium = Defense.string_null_defense(data['premium'])
+      @productId = Defense.string_null_defense(data['productId'])
       @locationType = Defense.string_null_defense(data['locationType'])
       @description = Defense.string_null_defense(data['description'])
       @image = Defense.string_null_defense(data['image'])
@@ -38,6 +39,7 @@ module Exhibitions
         date_start: @date_start,
         date_finish: @date_finish,
         type: @type,
+        productId: @productId,
         beacon: @beacon,
         premium: @premium,
         locationType: @locationType,
