@@ -45,6 +45,8 @@
             },
 
             getSchedule: function() {
+                
+                console.log(this.scheduleData, "this.scheduleDatathis.scheduleData");
                 return this.scheduleData;
             },
 
@@ -62,6 +64,7 @@
             storeSchedule: function() {
                 this.selectedDays.forEach(function(day) {
                     if(this.selectedHours !== null){
+                        console.log(this.selectedHours, "this.selectedHours.selectedHours");
                         this.scheduleData[day].push(this.selectedHours);
                     }
                     var duplicateHoursRemoved = this.removeDuplicateHours(day);

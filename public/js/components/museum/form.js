@@ -21,6 +21,7 @@ Class('Museum.Form', {
         this.contactForm = document.getElementById('contact');
         this.priceForm = document.getElementById('price');
         this.scheduleForm = document.getElementById('schedule');
+
         this.languages = document.getElementById('languages');
         this.phone = document.getElementsByClassName('contact-fields')[0];
         this.email = document.getElementsByClassName('contact-fields')[1];
@@ -42,8 +43,10 @@ Class('Museum.Form', {
         if (null == this.scheduleForm){
             this.scheduleForm = {};
         }
+        
         this.scheduleForm.scheduleData = this.storage;
-
+                
+           
         this.addListeners();
         this.loadEditInfo();
     },

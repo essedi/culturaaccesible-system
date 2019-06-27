@@ -6,15 +6,16 @@
             <span class="input-group">
                 <input type="checkbox" name="select-all" on-change="checkAllDays" data-day="allDays" checked="{{checked}}"> Select all
             </span>
-            <template is="dom-repeat" items={{week}}>
+            <template is="dom-repeat" items={{week}} >
                 <span class="input-group">
-                    <input name$="{{item}}" type="checkbox" on-change="updateSelection" checked="{{checked}}"> {{item}}
+                    <input name$="{{item}}" type="checkbox" on-change="updateSelection" checked="{{checked}}" value="{{item}}"> {{item}}
                 </span>
             </template>
         </div>
     </template>
 
     <script>
+        
         Polymer({
             is: 'cuac-schedule-days',
 
@@ -22,30 +23,33 @@
 
                 selection: {type: Array, value: [], notify: true},
 
-                week: {type: Array, value: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']},
+                week: {type: Array, value: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN' ]},
 
                 checked: { type: Boolean, value: false },
 
             },
 
             checkAllDays: function() {
-                this.selection = this.week;
+               
                  if(this.checked == false)
                 {
+                    this.selection = this.week;
                     this.checked = true;
                      
                 }else
-                {
+                { 
                     this.checked = false;
-
                 }
             },
 
             updateSelection: function(event) {
-                if (event.target.checked) {
+
+                if (event.target.checked) 
+                {
                     this.selection.push(event.target.name);
                     
-                } else {
+                } else 
+                {
                     var index = this.selection.indexOf(event.target.name);
                     this.selection.splice(index, 1);
                 }

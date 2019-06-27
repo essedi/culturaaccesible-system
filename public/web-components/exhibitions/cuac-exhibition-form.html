@@ -20,11 +20,8 @@
                 width: 100%;
                 background-color: gray;
               }
-            
-
         </style>
      
-         
         <form class$="form {{formVisibility}}">
               
             <div class="checkbox" >
@@ -43,15 +40,11 @@
                     Premium 
                 </label>
             </div>
-              
-              
-              
+          
             <div class$="form-group {{premiumClass}}" >
                 <label for="productId"><strong>Product Id</strong></label>
                 <input class="form-control" name="productId" value="{{productId::input}}">
             </div>
-              
-              
             <hr>
 
             <div class="form-group">
@@ -59,7 +52,7 @@
                 <input class="form-control" name="name" value="{{name::input}}">
             </div>
             <div class="form-group">
-                <label for="museums"><strong>Museum*</strong></label>
+                <label for="museums"><strong>Museum / Route *</strong></label>
                 <select class="form-control" id="museums" name="museums" value="{{museumValue::change}}">
                     <option selected disabled>Select a museum</option>
                     <template is="dom-repeat" items="[[museums]]" as="museum">
@@ -69,12 +62,13 @@
             </div>
             <div class="form-group">
                 <label for="type">Type</label>
-                <select class="form-control" id="type" name="type" value="{{typeValue::change}}">
+                <select   class="form-control" id="type" name="type" value="{{type::change }}" >
                     <option selected disabled>Select an option</option>
                     <option value="paint">Paint</option>
                     <option value="sculpture">Sculpture</option>
                     <option value="mixed-art">Mixed Art</option>
                     <option value="artist-exhibition">Artist Exhibition</option>
+                    <option value="route">External Route</option>
                 </select>
             </div>
             <div>
@@ -97,9 +91,6 @@
                     <option value="beacon">Beacon</option>
                 </select>
             </div>
-              
-           
-           
 
             <div class$="form-group {{beaconClass}}" >
                 <label for="beacon">Beacon number </label>
@@ -108,7 +99,7 @@
 
             <div class$="form-group">
                 <label for="image">Image link</label>
-                <input class="form-control" name="image" value="{{image::input}}">
+                <input class="form-control" name="image" id="image"  value="{{image::input}}">
 
                 <div class="image">
                   <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
@@ -123,9 +114,8 @@
 
     
     <script>
-        
-        
-    
+        var types = [];
+
         Polymer({
             is: 'cuac-exhibition-form',
 
@@ -178,7 +168,9 @@
                 
                 general_description: {},
 
-                typeValue: {},
+                typeValue: {type: Array},
+                
+                type: { type: Array, observer: 'pushTypes' },
 
                 dateStart: {},
 
@@ -192,6 +184,26 @@
 
                 locationType: {type: String , observer: 'locationTypeAction'}
 
+            },
+            
+            
+          
+            pushTypes: function() 
+            {
+               /* var itemDisabled = types.find( obj => obj == type);
+                
+               if(!itemDisabled){
+                    
+                    types.push(type);
+                
+                    this.type= types;
+                
+                }*/
+                
+        
+          
+ 
+                
             },
             
          
@@ -272,7 +284,19 @@
             },
 
             previewImage: function() {
-                this.imageSource = this.image;
+                
+               this.imageSource = this.image;
+               // check if is image 
+               if(this.imageSource.match(/\.(jpeg|jpg|gif|png)/) != null) 
+               {
+                   console.log("true");
+                   
+               }else
+               {
+                   console.log("false");
+                   alert("not a valid image");
+               }
+               
             },
 
             collectData: function() {
@@ -287,7 +311,7 @@
                     productId: this.productId,
                     museum_id: this.museumValue,
                     general_description: this.general_description,
-                    type: this.typeValue,
+                    type: this.type,
                     date_start: this.formatDate(this.dateStart),
                     date_finish: this.formatDate(this.dateFinish),
                     beacon: this.beacon,
@@ -324,7 +348,7 @@
               document.getElementsByName("unlocked")[0].checked = this.edited.unlocked;
               this.museumValue = this.edited.museum.id;
               this.general_description = this.edited.general_description;
-              this.typeValue = this.edited.type;
+              this.type = this.edited.type;
               this.dateStart = this.translateEditedDate(this.edited.date_start);
               this.dateFinish = this.translateEditedDate(this.edited.date_finish);
               if ( typeof (this.edited.translations) != "undefined" ) {

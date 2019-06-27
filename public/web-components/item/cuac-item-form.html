@@ -13,6 +13,14 @@
             .hide {
                 display: none;
             }
+            
+            .form.show {
+                display: block;
+            }
+
+            .form.hide {
+                display: none;
+            }
              #map {
                 height: 400px;
                 width: 100%;
@@ -98,12 +106,16 @@
         
         <form class$="form {{formVisibility}}">
             <div class="panel panel-primary">
-                <div class="panel-heading">
+                <div class$="panel-heading {{beaconClass}}">
                     Item
+                </div>
+                <div class$="panel-heading {{coordsClass}}">
+                    Route
                 </div>
                 <div class="panel-body form-group">
                     <div class="col-md-6">
-                        <div class="form-group">
+                       
+                        <div class$="form-group {{beaconClass}}">
                             <label for="room">Room</label>
                             <input type="checkbox" class="room" name="room" on-change="roomToggle" disabled$="{{disableCheckBox}}"></input>
                         </div>
@@ -119,7 +131,7 @@
                             <label for="name"><strong>Name*</strong></label>
                             <input class="form-control" name="name" value="{{name::input}}" on-keyup="saveActivation" autofocus></input>
                         </div>
-                        <div class="form-group">
+                        <div class$="form-group {{beaconClass}}">
                             <label for="author">Author</label>
                             <input class="form-control" name="author" value="{{author::input}}" disabled="{{disableItemInput}}" type="text"></input>
                         </div>
@@ -145,8 +157,8 @@
                                <hr>
                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
                                <div id="map" ></div>
-                               <span id="lat1" value="{{ lat }}"  > lat= {{ lat }}  </span> 
-                               <span id="lng1" value="{{ lng }}" > lng= {{ lng }}  </span>
+                               <span id="lat1" value="{{ lat }}" style="display:none" > lat= {{ lat }}  </span> 
+                               <span id="lng1" value="{{ lng }}" style="display:none"> lng= {{ lng }}  </span>
                         </div>
                      </div>
                     
@@ -389,9 +401,9 @@ var longitude ;
 
             collectData: function() {
                 
-              if(this.exhibition){
+             
                   
-                 if(this.exhibition.locationType == "gps")
+                 if(this.exhibition && this.exhibition.locationType == "gps")
                  {
 
                    this.coordsClass = 'show';
@@ -403,7 +415,7 @@ var longitude ;
                    this.beaconClass = 'show';
 
                  }
-              }  
+              
               
 
                 var translations = this.retrieveTranslations();
@@ -431,22 +443,21 @@ var longitude ;
 
             fillForm: function() {
 
-              if(this.exhibition){
-                  
-                 if(this.exhibition.locationType == "gps")
-                 {
 
-                   this.coordsClass = 'show';
-                   this.beaconClass = 'hide';
-                   
-                 }else{
-                     
-                   this.coordsClass = 'hide';
-                   this.beaconClass = 'show';
+                if(this.exhibition && this.exhibition.locationType == "gps")
+                {
 
-                 }
-              }  
-            
+                  this.coordsClass = 'show';
+                  this.beaconClass = 'hide';
+
+                }else{
+
+                  this.coordsClass = 'hide';
+                  this.beaconClass = 'show';
+
+                }
+                 
+                 
               this.lat = this.edited.lat;
               this.lng = this.edited.lng;
               this.beacon = this.edited.beacon;   

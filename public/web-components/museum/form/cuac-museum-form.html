@@ -7,7 +7,8 @@
         </style>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Info</div>
+            
+            <div class="panel-heading">Info </div>
             <div class="panel-body">
                 <cuac-info-form id="info" info="{{museum.info}}"></cuac-info-form>
             </div>
@@ -50,8 +51,11 @@
 
             properties: {
                 museum: {
-                    type: Object,
+                    type: Object, observer:"seeMuseum",
                 }
+            },
+            seeMuseum: function() {
+                console.log(this.museum, "MUSEUM");
             },
 
             getTranslations: function() {
