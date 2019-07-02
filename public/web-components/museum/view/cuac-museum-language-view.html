@@ -2,7 +2,9 @@
 
 <dom-module id="cuac-museum-language-view">
     <template>
-      <h3 on-change="getLanguage">{{language}}</h3>
+        
+      <h3 on-change="getLanguage">{{ translation.title }}</h3>
+
       <div class$="description-{{translation.iso_code}}">Description: {{translation.description}}</div>
     </template>
 
@@ -27,6 +29,12 @@
                         break;
                     case 'cat':
                         this.language = 'Valencià';
+                        break;
+                    case 'newLanguage':
+                        this.language = 'newLanguage';
+                        break;
+                    case 'newLanguage2':
+                        this.language = 'newLanguage2';
                         break;
                 }
             }

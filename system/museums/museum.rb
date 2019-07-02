@@ -29,7 +29,7 @@ module Museums
       }
     end
     
- 
+
 
     def self.from_bson(bson, id)
       Museums::Museum.new(bson, id)

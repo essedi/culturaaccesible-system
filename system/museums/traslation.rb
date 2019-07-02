@@ -3,6 +3,7 @@ module Museums
     def initialize(data, museum_id, id = nil)
       @description = Defense.string_null_defense(data['description'])
       @iso_code = Defense.string_null_defense(data['iso_code'])
+      @title = Defense.string_null_defense(data['title'])
       @museum_id = museum_id
       @id = id || generate_id
     end
@@ -10,6 +11,7 @@ module Museums
     def serialize
       {
         id: @id,
+        title: @title,
         description: @description,
         iso_code: @iso_code,
         museum_id: @museum_id

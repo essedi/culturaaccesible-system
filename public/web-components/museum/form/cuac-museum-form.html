@@ -40,7 +40,6 @@
         <cuac-museum-languages id="languages"></cuac-museum-languages>
         <div class="col-md-12">
             <cuac-save-button id="saveMuseum"></cuac-save-button>
-
         </div>
 
     </template>
@@ -63,6 +62,9 @@
                 translations.push(this.$.languages.$.spanish.collectData());
                 if(this.$.languages.$.english.visiblelang === "true") translations.push(this.$.languages.$.english.collectData());
                 if(this.$.languages.$.catala.visiblelang === "true") translations.push(this.$.languages.$.catala.collectData());
+                if(this.$.languages.$.newLanguage.visiblelang === "true") translations.push(this.$.languages.$.newLanguage.collectData());
+                if(this.$.languages.$.newLanguage2.visiblelang === "true") translations.push(this.$.languages.$.newLanguage2.collectData());
+
                 return translations;
             }
         });

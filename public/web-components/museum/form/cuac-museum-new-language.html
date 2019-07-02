@@ -1,6 +1,6 @@
 <link rel="import" href="/vendor/polymer/polymer.html">
 
-<dom-module id="cuac-museum-language">
+<dom-module id="cuac-museum-new-language">
     <template>
         <style>
             .show {
@@ -17,20 +17,25 @@
         </style>
         <div class$="panel panel-primary {{visibility}}">
             <div class="panel-heading">
-                <h3 class="panel-title">{{language}}</h3>
+                <h3 class="panel-title">{{title}}</h3>
             </div>
             <div class="panel-body">
-              <div class="form-group">
+              <div class="form-group col-md-12">
+                  <label for="title">Laguage Name </label>
+                  <input class="form-control" name="title" value="{{title::input}}"></input>
+              </div>
+              
+              <div class="form-group col-md-12">
                   <label for="description">Description</label>
                   <textarea class="form-control" name="description-{{locale}}" value="{{description::input}}"></textarea>
               </div>
             </div>
         </div>
-
     </template>
+
     <script>
         Polymer({
-            is: 'cuac-museum-language',
+            is: 'cuac-museum-new-language',
 
             ready: function() {
               this.toggleVisibility()
@@ -43,10 +48,12 @@
                 translationId: {},
 
                 description: {type:String},
-
-                language: {type: String},
                 
-                title: {type:String},
+                title: {type:String, notify: true},
+                
+                iso: {type:String, notify: true},
+                
+                language: {type: String},
 
                 translation: {type: Object, observer: 'fillLanguage'},
 
@@ -61,23 +68,24 @@
                 this.translationId = this.translation.id;
                 this.museumId = this.translation.museum_id;
                 this.description = this.translation.description;
+                this.title = this.title;
+
             },
 
             collectData: function() {
                 data = {
                     id: this.translationId,
                     description: this.description,
+                    title: this.title,
                     iso_code: this.locale,
-                    title: this.language,
-                    museum_id: this.museumId
+                    museum_id: this.museumId,
                 };
                 return data;
             },
-
+            
             toggleVisibility: function() {
               this.visibility = this.visiblelang === 'true' ? 'show' : 'hide'
             }
-
         });
     </script>
 </dom-module>

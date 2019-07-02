@@ -15,3 +15,5 @@ ADD . $HOME
 WORKDIR $HOME
 RUN gem install bundler -v 1.14.6
 RUN bundle install
+
+

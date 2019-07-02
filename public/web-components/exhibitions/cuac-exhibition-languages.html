@@ -81,10 +81,20 @@
             <span class="slider round"></span>
           </label>
         </div>
+        
+         <div class="language-switch">
+          <p>New 2</p>
+          <label class="switch toggle-language-newLanguage2">
+            <input type="checkbox" class="newLanguage2" on-change="toggleNewLanguage2" name="newLanguage2">
+            <span class="slider round"></span>
+          </label>
+        </div>
 
         <cuac-exhibition-language id="spanish" visiblelang="true" language="Castellano" locale="es"></cuac-exhibition-language>
         <cuac-exhibition-language id="english" visiblelang="false" language="English" locale="en"></cuac-exhibition-language>
         <cuac-exhibition-language id="catala" visiblelang="false" language="Valencià" locale="cat"></cuac-exhibition-language>
+        <cuac-exhibition-language id="newLanguage2" visiblelang="false" language="newLanguage2" locale="newLanguage2"></cuac-exhibition-language>
+
     </template>
 
     <script>
@@ -94,7 +104,8 @@
             properties: {
               english: { Type: Boolean, default: false },
               catala: { Type: Boolean, default: false },
-              spanish: { Type: Boolean, default: true }
+              spanish: { Type: Boolean, default: true },
+              newLanguage2: { Type: Boolean, default: true }
             },
 
             toggleEnglish: function(event) {
@@ -108,11 +119,18 @@
               this.$.catala.visiblelang = event.target.checked + '';
               this.$.catala.toggleVisibility();
             },
+            
+            toggleNewLanguage2: function(event) {
+              this.newLanguage2 = event.target.checked;
+              this.$.newLanguage2.visiblelang = event.target.checked + '';
+              this.$.newLanguage2.toggleVisibility();
+            },
 
             collectLocaleData: function() {
               var iso_codes = ['es'];
               if (this.english) { iso_codes.push('en') };
               if (this.catala) { iso_codes.push('cat') };
+              if (this.newLanguage2) { iso_codes.push('newLanguage2') };
               return iso_codes
             }
         });
