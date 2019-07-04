@@ -11,7 +11,6 @@
                 display: none;
             }
         </style>
-        <cuac-exhibition-delete-alert id="alert" exhibition="{{exhibition}}"></cuac-exhibition-delete-alert>
         <div class$="view {{panelVisibility}}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -40,6 +39,7 @@
                     </div>
                 </div>
             </div>
+            <cuac-exhibition-delete-alert id="alert" exhibition="{{exhibition}}"></cuac-exhibition-delete-alert>
             <cuac-exhibition-edit-button exhibition="{{exhibition}}"></cuac-exhibition-edit-button>
             <cuac-delete-button item="{{exhibition}}"></cuac-delete-button>
         </div>
