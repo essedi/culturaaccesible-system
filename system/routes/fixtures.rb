@@ -17,14 +17,14 @@ class App < Sinatra::Base
     Exhibitions::Service.store(exhibition_data)
   end
 
-  get '/api/fill/admin' do
+ # get '/api/fill/admin' do
   #  return {valid: false}.to_json if !login?  || retrieve_mode == 'development'
    #  Exhibitions::Service.flush
-     Museums::Service.flush
-     museum = store_museum
-     exhibition = store_exhibition(museum[:id])
-     store_sculpture_room(exhibition[:id])
-     store_painting_room(exhibition[:id])
-     {}.to_json
-   end 
+   #  Museums::Service.flush
+   #  museum = store_museum
+  #   exhibition = store_exhibition(museum[:id])
+   #  store_sculpture_room(exhibition[:id])
+   #  store_painting_room(exhibition[:id])
+   #  {}.to_json
+  # end 
 end
