@@ -20,6 +20,10 @@
             <div class="col-md-2">
                 <button class="btn btn-primary add-button" on-click="addClicked" disabled$="{{disabledAdd}}">+</button>
             </div>
+           <!-- <div class="col-md-1">
+                <button class="btn btn-danger" on-click="clearSchedule" >Clear</button>
+            </div>-->
+            
         </div>
     </template>
 
@@ -39,6 +43,13 @@
 
                 visibility: {type: String, value: 'show'}
 
+            },
+
+            clearSchedule: function() {
+                this.openingHours = '';
+                this.days = [];
+                this.selection = [];
+                this.scheduleData = [];
             },
 
             daysChanged: function() {

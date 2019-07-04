@@ -120,6 +120,10 @@ module Exhibitions
         updated_translation = connection.exhibition_translations.find_one_and_update({ id: translation['id'] }, { "$set" => translation }, {:return_document => :after })
         Exhibitions::Translation.from_bson(updated_translation, updated_translation['exhibition_id'], updated_translation['id']).serialize
       end
+      
+      def flush
+        connection.exhibitions.delete_many
+      end
 
       def store(exhibition_data)
         exhibition = Exhibitions::Exhibition.new(exhibition_data)
