@@ -60,17 +60,37 @@
                     </template>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="type">Type</label>
-                <select   class="form-control" id="type" name="type" value="{{type::change }}" >
-                    <option selected disabled>Select an option</option>
-                    <option value="paint">Paint</option>
-                    <option value="sculpture">Sculpture</option>
-                    <option value="mixed-art">Mixed Art</option>
-                    <option value="artist-exhibition">Artist Exhibition</option>
-                    <option value="route">External Route</option>
-                </select>
+
+           <br>
+           <h4>Type:</h4>
+           <div class="checkbox" >
+                <label style="padding-right: 30px" for="paint">
+                    <input type="checkbox" name="paint" value="paint" checked="{{paint::change}}">
+                    Paint
+                </label>
+           
+                <label style="padding-right: 30px" for="sculpture">
+                    <input  type="checkbox" name="sculpture" value="sculpture" checked="{{sculpture::change}}">
+                    Sculpture
+                </label>
+               
+                <label style="padding-right: 30px" for="mixed-art">
+                    <input  type="checkbox" name="mixed-art" value="mixed-art" checked="{{mixed_art::change}}">
+                    Mixed Art
+                </label>
+           
+                <label style="padding-right: 30px" for="artist-exhibition">
+                    <input  type="checkbox" name="artist-exhibition" value="artist-exhibition" checked="{{artist_exhibition::change}}">
+                    Artist Exhibition
+                </label>
+           
+                <label style="padding-right: 30px" for="external-route">
+                    <input  type="checkbox" name="external-route" value="external-route" checked="{{external_route::change}}">
+                    External Route
+                </label>
+           
             </div>
+            <hr>
             <div>
                 <h4>Open</h4>
                 <div class="form-group col-md-6">
@@ -170,7 +190,7 @@
 
                 typeValue: {type: Array},
                 
-                type: { type: Array, observer: 'pushTypes' },
+                type: { type: Array },
 
                 dateStart: {},
 
@@ -182,28 +202,120 @@
 
                 productId: { type: String  },
 
-                locationType: {type: String , observer: 'locationTypeAction'}
+                locationType: {type: String , observer: 'locationTypeAction'},
+                
+                paint: { type: Boolean, value: false, observer: 'paintChange' },
+                                
+                sculpture: {type: Boolean, value: false,  observer: 'sculptureChange' },
+                
+                mixed_art:  {type: Boolean, value: false,  observer: 'mixedArtChange' },
+                
+                artist_exhibition:  {type: Boolean, value: false,  observer: 'artistExhibitionChange' },
+                
+                external_route:  {type: Boolean, value: false,  observer: 'externalRouteChange' },
+
 
             },
             
-            
-          
-            pushTypes: function() 
+            artistExhibitionChange: function() 
             {
-               /* var itemDisabled = types.find( obj => obj == type);
-                
-               if(!itemDisabled){
+                if(this.artist_exhibition == true ){
                     
-                    types.push(type);
+                   types.push("artist-exhibition");
+
+                }else{
+
+                    var itemDisabled = types.find( obj => obj == "artist-exhibition");
+
+                    var index = types.indexOf(itemDisabled);
+
+                    if (index > -1) {
+                       types.splice(index, 1);
+                    }
+                }
                 
-                    this.type= types;
+                this.type = types;
+            },
+            
+            externalRouteChange: function() 
+            {
+                if(this.external_route == true ){
+                    
+                   types.push("external-route");
+
+                }else{
+
+                    var itemDisabled = types.find( obj => obj == "external-route");
+
+                    var index = types.indexOf(itemDisabled);
+
+                    if (index > -1) {
+                       types.splice(index, 1);
+                    }
+                }
                 
-                }*/
+                this.type = types;
+            },
+            
+            
+            mixedArtChange: function() 
+            {
+                if(this.mixed_art == true ){
+                    
+                   types.push("mixed-art");
+
+                }else{
+
+                    var itemDisabled = types.find( obj => obj == "mixed-art");
+
+                    var index = types.indexOf(itemDisabled);
+
+                    if (index > -1) {
+                       types.splice(index, 1);
+                    }
+                }
                 
-        
-          
- 
+                this.type = types;
+            },
+            
+             paintChange: function() 
+            {
+                if(this.paint == true ){
+                    
+                   types.push("paint");
+
+                }else{
+
+                    var itemDisabled = types.find( obj => obj == "paint");
+
+                    var index = types.indexOf(itemDisabled);
+
+                    if (index > -1) {
+                       types.splice(index, 1);
+                    }
+                }
                 
+                this.type = types;
+            },
+            
+             sculptureChange: function() 
+            {
+                if(this.sculpture == true){
+                    
+                     types.push("sculpture");
+
+                }else{
+
+                     var itemDisabled = types.find( obj => obj == "sculpture");
+                     var index = types.indexOf(itemDisabled);
+
+                     if (index > -1) {
+                        types.splice(index, 1);
+                     }
+                }
+                
+                this.type = types;
+
             },
             
          
@@ -301,7 +413,6 @@
 
             collectData: function() {
                 
-               
                 data = {
                     id: this.exhibitionId,
                     show: this.show,
@@ -333,6 +444,7 @@
             },
 
             fillForm: function() {
+
                 
               this.exhibitionId = this.edited.id;
               this.name = this.edited.name;
@@ -349,6 +461,34 @@
               this.museumValue = this.edited.museum.id;
               this.general_description = this.edited.general_description;
               this.type = this.edited.type;
+
+                if(this.type.length > 0){
+
+                    for(let item of this.type){
+                        
+                       let name = item.toString();
+                       
+                       
+                       switch (name) {
+                        case "paint":
+                              this.paint = true;
+                            break;
+                        case "sculpture":
+                            this.sculpture = true;
+                          break;
+                        case "mixed-art":
+                            this.mixed_art = true;
+                          break;
+                        case "external-route":
+                            this.external_route = true;
+                          break;
+                        case "artist-exhibition":
+                            this.artist_exhibition = true;
+                          break;
+                      }
+                    }
+                }
+                
               this.dateStart = this.translateEditedDate(this.edited.date_start);
               this.dateFinish = this.translateEditedDate(this.edited.date_finish);
               if ( typeof (this.edited.translations) != "undefined" ) {

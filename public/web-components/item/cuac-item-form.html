@@ -196,7 +196,7 @@ var longitude ;
         initMap = function() {
             
             
-        window.onload = function() {  
+      //  window.onload = function() {  
               
             var lat1 = document.getElementById('lat1').value;
             var lng1 = document.getElementById('lng1').value;
@@ -273,8 +273,9 @@ var longitude ;
           });
           map.fitBounds(bounds);
         });
-        };
-      }
+       // };
+     
+    }
 
     
     function placeMarker(location) {
@@ -366,7 +367,8 @@ var longitude ;
 
           //--------------------------------------
 
-            roomToggle: function(event) {
+            roomToggle: function(event) 
+            {
                 if (event.target.checked) {
                     if(this.essentialItemFieldsHasContent()){
                         this.fire('roomAlert');
@@ -400,23 +402,6 @@ var longitude ;
             },
 
             collectData: function() {
-                
-             
-                  
-                 if(this.exhibition && this.exhibition.locationType == "gps")
-                 {
-
-                   this.coordsClass = 'show';
-                   this.beaconClass = 'hide';
-                   
-                 }else{
-                     
-                   this.coordsClass = 'hide';
-                   this.beaconClass = 'show';
-
-                 }
-              
-              
 
                 var translations = this.retrieveTranslations();
                 data = {
@@ -442,22 +427,8 @@ var longitude ;
             },
 
             fillForm: function() {
+            
 
-
-                if(this.exhibition && this.exhibition.locationType == "gps")
-                {
-
-                  this.coordsClass = 'show';
-                  this.beaconClass = 'hide';
-
-                }else{
-
-                  this.coordsClass = 'hide';
-                  this.beaconClass = 'show';
-
-                }
-                 
-                 
               this.lat = this.edited.lat;
               this.lng = this.edited.lng;
               this.beacon = this.edited.beacon;   
@@ -471,10 +442,26 @@ var longitude ;
               this.editId = this.edited.id;
               this.disableCheckBox = true;
               this.translations = this.edited.translations;
+              
+              if(this.exhibition && this.exhibition.locationType == "gps")
+               {
+
+                 this.coordsClass = 'show';
+                 this.beaconClass = 'hide';
+
+               }else{
+
+                 this.coordsClass = 'hide';
+                 this.beaconClass = 'show';
+
+               }
+               
               if(this.type = 'scene'){
                 this.author = this.edited.author;
                 this.date = this.edited.date;
               }
+              
+    
             },
 
             retrieveTranslations: function() {
