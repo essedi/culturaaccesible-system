@@ -57,6 +57,11 @@ module Museums
         end
         translations
       end
+      
+      
+      def flush
+        connection.museums.delete_many
+      end
 
       def delete(id)
         museum_data = retrieve(id)

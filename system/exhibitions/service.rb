@@ -89,10 +89,13 @@ module Exhibitions
           retrieve_translated(exhibition['id'], iso_code)
         end
       end
-
+      
+      
       def flush
         Exhibitions::Repository.flush
       end
+
+    
     end
   end
 end

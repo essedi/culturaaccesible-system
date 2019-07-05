@@ -35,11 +35,14 @@
                 {
                     this.selection = this.week;
                     this.checked = true;
-                     
+                   
                 }else
                 { 
-                    this.checked = false;
+                    this.checked = false;   
+                    this.selection = [];
                 }
+                
+                 console.log(this.selection, "this.selectionthis.selection")
             },
 
             updateSelection: function(event) {
@@ -55,6 +58,9 @@
                 }
 
                 this.polymerWorkaround(this.selection);
+                
+                 console.log(this.selection, "this.selectionthis.selection")
+
             },
 
             polymerWorkaround: function(selection) {
