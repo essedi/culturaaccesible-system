@@ -281,28 +281,33 @@ var longitude ;
         
                    
 
+            document.addEventListener("DOMContentLoaded", function() {
+                setTimeout(function(){
 
-          setTimeout(function(){
-              
-            var locationType = document.getElementById('locationType').value;
-              console.log(locationType, "locationType");
-         
-            if(locationType == "gps")
-           {
-                for(var i=0;i<3;i++){
+                var locationType = document.getElementById('locationType').value;
+                  console.log(locationType, "locationType");
 
-                 document.getElementsByClassName("itemClass")[i].style.display = "none";
-                 
+
+                if(locationType == "gps")
+               {
+                    for(var i=0;i<3;i++){
+
+                     document.getElementsByClassName("itemClass")[i].style.display = "none";
+
+                    }
+
+                }else
+                {
+
+                    document.getElementsByClassName("routeClass")[0].style.display = "none";
+
+
                 }
-                
-            }else
-            {
-               
-                document.getElementsByClassName("routeClass")[0].style.display = "none";
+              }, 400);
+          });
 
-                
-            }
-          }, 400);
+          
+          
         };
       }
 
