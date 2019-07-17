@@ -13,6 +13,8 @@
                 buttontype: {type: String},
 
                 inputsAmount: {type: Number, value: 1},
+                
+                exhibition: { type: Object , reflectToAttribute: true},
 
                 activate: {type: Boolean, reflectToAttribute: true, observer:'toggleActivation'},
 

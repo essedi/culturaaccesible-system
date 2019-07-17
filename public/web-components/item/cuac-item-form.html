@@ -106,24 +106,23 @@
         
         <form class$="form {{formVisibility}}">
             <div class="panel panel-primary">
-                <div class$="panel-heading {{beaconClass}}">
+                <div class="panel-heading">
                     Item
                 </div>
-                <div class$="panel-heading {{coordsClass}}">
-                    Route
-                </div>
+                
                 <div class="panel-body form-group">
                     <div class="col-md-6">
                        
-                        <div class$="form-group {{beaconClass}}">
+                        <div class="form-group itemClass">
                             <label for="room">Room</label>
                             <input type="checkbox" class="room" name="room" on-change="roomToggle" disabled$="{{disableCheckBox}}"></input>
                         </div>
+               
                         <div class="form-group number">
                             <label for="number">Number</label>
                             <input class="form-control" name="number" value="{{number::input}}" on-keyup="numberValidation"></input>
                         </div>
-                        <div class$="form-group {{beaconClass}}" >
+                        <div class$="form-group itemClass {{beaconClass}}" >
                             <label for="beacon">Beacon Number</label>
                             <input class="form-control" type="number" name="beacon" value="{{beacon::input}}"></input>
                         </div>
@@ -131,7 +130,7 @@
                             <label for="name"><strong>Name*</strong></label>
                             <input class="form-control" name="name" value="{{name::input}}" on-keyup="saveActivation" autofocus></input>
                         </div>
-                        <div class$="form-group {{beaconClass}}">
+                        <div class$="form-group itemClass {{beaconClass}}">
                             <label for="author">Author</label>
                             <input class="form-control" name="author" value="{{author::input}}" disabled="{{disableItemInput}}" type="text"></input>
                         </div>
@@ -150,8 +149,8 @@
                             <img class="img-responsive img-thumbnail" src="{{imageSource}}" alt="image">
                         </div>
                     </div>
-                    
-                    <div class="col-md-12">
+
+                    <div class="col-md-12 routeClass">
                         <div class$="form-group {{coordsClass}}">
                               <h3>Ubicación</h3>
                                <hr>
@@ -167,6 +166,9 @@
                             <cuac-item-languages language={{item}} translations="{{translations}}" class="translations"></cuac-item-languages>
                         </div>
                     </template>
+                    
+                  <span id="locationType" value="{{ exhibition.locationType }}"></span>
+
                 </div>
             </div>
             <div class="text-center">
@@ -187,16 +189,18 @@ var longitude ;
 
 (function() {
     
-    var map;
-    var marker;
-    var infowindow;
-    var input ;
-
+        var map;
+        var marker;
+        var infowindow;
+        var input ;
         
+               
+                  
         initMap = function() {
             
+
             
-      //  window.onload = function() {  
+        window.onload = function() {  
               
             var lat1 = document.getElementById('lat1').value;
             var lng1 = document.getElementById('lng1').value;
@@ -273,9 +277,34 @@ var longitude ;
           });
           map.fitBounds(bounds);
         });
-       // };
-     
-    }
+        
+        
+                   
+
+
+          setTimeout(function(){
+              
+            var locationType = document.getElementById('locationType').value;
+              
+         
+            if(locationType == "gps")
+           {
+                for(var i=0;i<3;i++){
+
+                 document.getElementsByClassName("itemClass")[i].style.display = "none";
+                 
+                }
+                
+            }else
+            {
+               
+                document.getElementsByClassName("routeClass")[0].style.display = "none";
+
+                
+            }
+          }, 200);
+        };
+      }
 
     
     function placeMarker(location) {
@@ -364,11 +393,10 @@ var longitude ;
           
             },
             
-
+  
           //--------------------------------------
 
-            roomToggle: function(event) 
-            {
+            roomToggle: function(event) {
                 if (event.target.checked) {
                     if(this.essentialItemFieldsHasContent()){
                         this.fire('roomAlert');
@@ -380,6 +408,19 @@ var longitude ;
                     this.disableItemInput = false;
                     this.room = false;
                     this.type = 'scene'
+                }
+            },
+            
+            routeToggle: function(event) {
+                if (event.target.checked) {
+                    
+                   this.coordsClass = 'show';
+                   this.beaconClass = 'hide';
+                   
+                } else {
+                    
+                   this.coordsClass = 'hide';
+                   this.beaconClass = 'show';
                 }
             },
 
@@ -402,6 +443,7 @@ var longitude ;
             },
 
             collectData: function() {
+                
 
                 var translations = this.retrieveTranslations();
                 data = {
@@ -429,6 +471,8 @@ var longitude ;
             fillForm: function() {
             
 
+ 
+                 
               this.lat = this.edited.lat;
               this.lng = this.edited.lng;
               this.beacon = this.edited.beacon;   
@@ -442,19 +486,7 @@ var longitude ;
               this.editId = this.edited.id;
               this.disableCheckBox = true;
               this.translations = this.edited.translations;
-              
-              if(this.exhibition && this.exhibition.locationType == "gps")
-               {
-
-                 this.coordsClass = 'show';
-                 this.beaconClass = 'hide';
-
-               }else{
-
-                 this.coordsClass = 'hide';
-                 this.beaconClass = 'show';
-
-               }
+             
                
               if(this.type = 'scene'){
                 this.author = this.edited.author;
@@ -473,6 +505,8 @@ var longitude ;
                         languages.push(data);
                     }
                 }
+                
+                
                 return languages;
             },
 

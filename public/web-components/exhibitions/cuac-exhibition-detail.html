@@ -10,7 +10,7 @@
               <a href="/exhibition/{{exhibition.id}}/info" class="exhibition-name">{{exhibition.name}}</a>
             </span>
             <span class="glyphicon glyphicon-list toggle-exhibition-list" on-click="toggleVisibility">&nbsp;</span>
-            <cuac-sidebar-plus-button class="sidebar-plus" exhibition$="{{exhibition}}" parent$="{{exhibition}}"></cuac-sidebar-plus-button>
+            <cuac-sidebar-plus-button class="sidebar-plus" exhibition$="{{exhibition}}" parent$="{{exhibition}}" parent2$="{{exhibition.locationType}}"></cuac-sidebar-plus-button>
             <cuac-item-list collapse$="{{collapse}}" exhibition$="{{exhibition}}"></cuac-item-list>
         </li>
     </template>
@@ -21,7 +21,7 @@
 
             properties: {
                 exhibition: {
-                    type: Object
+                    type: Object,   reflectToAttribute: true
                 },
                 collapse: {
                     type: Boolean
