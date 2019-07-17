@@ -185,8 +185,6 @@ function initMap() {} // now it IS a function and it is in global
 var latitude ;
 var longitude ;
 
-
-
 (function() {
     
         var map;
@@ -198,9 +196,13 @@ var longitude ;
                   
         initMap = function() {
             
-
+<<<<<<< HEAD
             
+      //  window.onload = function() {  
+=======
         window.onload = function() {  
+            
+>>>>>>> develop-2
               
             var lat1 = document.getElementById('lat1').value;
             var lng1 = document.getElementById('lng1').value;
@@ -277,6 +279,11 @@ var longitude ;
           });
           map.fitBounds(bounds);
         });
+<<<<<<< HEAD
+       // };
+     
+    }
+=======
         
         
                    
@@ -285,7 +292,7 @@ var longitude ;
           setTimeout(function(){
               
             var locationType = document.getElementById('locationType').value;
-              console.log(locationType, "locationType");
+              
          
             if(locationType == "gps")
            {
@@ -302,9 +309,10 @@ var longitude ;
 
                 
             }
-          }, 400);
+          }, 200);
         };
       }
+>>>>>>> develop-2
 
     
     function placeMarker(location) {
@@ -333,6 +341,7 @@ var longitude ;
       
         Polymer({
             is: 'cuac-item-form',
+            
 
             properties: {
 
@@ -359,11 +368,13 @@ var longitude ;
 
                 imageSource: { type: String },
 
-                exhibition: { type: Object },
+                exhibition: { type: Object , reflectToAttribute: true},
 
                 languages: { type: Array},
 
                 room: {type: Boolean, value: false},
+                
+                route: {type: Boolean, value: false},
 
                 disableCheckBox: {type: Boolean, value: false},
 
@@ -396,7 +407,8 @@ var longitude ;
   
           //--------------------------------------
 
-            roomToggle: function(event) {
+            roomToggle: function(event) 
+            {
                 if (event.target.checked) {
                     if(this.essentialItemFieldsHasContent()){
                         this.fire('roomAlert');
@@ -443,7 +455,10 @@ var longitude ;
             },
 
             collectData: function() {
+<<<<<<< HEAD
+=======
                 
+>>>>>>> develop-2
 
                 var translations = this.retrieveTranslations();
                 data = {
@@ -471,8 +486,11 @@ var longitude ;
             fillForm: function() {
             
 
+<<<<<<< HEAD
+=======
  
                  
+>>>>>>> develop-2
               this.lat = this.edited.lat;
               this.lng = this.edited.lng;
               this.beacon = this.edited.beacon;   
@@ -486,7 +504,19 @@ var longitude ;
               this.editId = this.edited.id;
               this.disableCheckBox = true;
               this.translations = this.edited.translations;
-             
+              
+              if(this.exhibition && this.exhibition.locationType == "gps")
+               {
+
+                 this.coordsClass = 'show';
+                 this.beaconClass = 'hide';
+
+               }else{
+
+                 this.coordsClass = 'hide';
+                 this.beaconClass = 'show';
+
+               }
                
               if(this.type = 'scene'){
                 this.author = this.edited.author;
