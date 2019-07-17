@@ -147,7 +147,7 @@
                 
                 premium :{type: Boolean , value: false, observer: 'premiumAction'},
 
-                exhibition: {type: Object, observer: 'storeId'},
+                exhibition: {type: Object, observer: 'storeId', reflectToAttribute: true},
 
                 edited: {type: Object, observer: 'fillForm'},
 
