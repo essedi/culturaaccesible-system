@@ -155,9 +155,22 @@
                               <h3>Ubicación</h3>
                                <hr>
                                <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-                               <div id="map" ></div>
-                               <span id="lat1" value="{{ lat }}" style="display:none" > lat= {{ lat }}  </span> 
-                               <span id="lng1" value="{{ lng }}" style="display:none"> lng= {{ lng }}  </span>
+                               <div id="map" onClick="changeMap()"></div>
+                               <!--<span id="lat1" value="{{ lat }}"  > latitude= {{ lat }}  </span>
+                                  <span id="lng1" value="{{ lng }}" > lng= {{ lng }}  </span>-->
+                               <hr>
+                               <div class="col-md-6">
+                                   <div class="form-group">
+                                        <label for="lat1">Latitude</label>
+                                         <input class="form-control" onChange="changeCoord()" id="lat1" value="{{ lat }}"  name="lat1" ></input>
+                                   </div>
+                               </div>
+                               <div class="col-md-6">
+                                   <div class="form-group">
+                                         <label for="lng1">Longitude</label>
+                                         <input class="form-control" onChange="changeCoord()" id="lng1" value="{{ lng }}"  name="lng1" ></input>
+                                   </div>
+                               </div>
                         </div>
                      </div>
                     
@@ -185,7 +198,27 @@ function initMap() {} // now it IS a function and it is in global
 var latitude ;
 var longitude ;
 
+function changeCoord()
+{
 
+     var lat1 = document.getElementById('lat1').value;
+     var lng1 = document.getElementById('lng1').value;
+     window.latitude = lat1;
+     window.longitude = lng1;
+                 
+ }
+  
+ function changeMap()
+{
+
+     var lat1 = document.getElementById('lat1');
+     var lng1 = document.getElementById('lng1');
+     lat1.value = window.latitude ;
+     lng1.value = window.longitude;
+     console.log("map changed");
+                 
+ }
+    
 
 (function() {
     
@@ -193,18 +226,18 @@ var longitude ;
         var marker;
         var infowindow;
         var input ;
-        
-               
-                  
+                          
         initMap = function() {
-            
-
-            
+                        
         window.onload = function() {  
+            
+            
+          //setTimeout(function(){
               
             var lat1 = document.getElementById('lat1').value;
             var lng1 = document.getElementById('lng1').value;
             
+     
             var myCenter;
                     
             if(lat1 && lng1)
@@ -240,7 +273,7 @@ var longitude ;
 
          });
          
-        
+         
         // Create the search box and link it to the UI element.
         input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
@@ -281,28 +314,22 @@ var longitude ;
         
                    
 
-                setTimeout(function(){
+        setTimeout(function(){ 
 
-                var locationType = document.getElementById('locationType').value;
-                  console.log(locationType, "locationType22");
+          var locationType = document.getElementById('locationType').value;
 
+          if(locationType == "gps")
+         {
+              for(var i=0;i<3;i++){
 
-                if(locationType == "gps")
-               {
-                    for(var i=0;i<3;i++){
+               document.getElementsByClassName("itemClass")[i].style.display = "none";
+              }
+          }else
+          {
+              document.getElementsByClassName("routeClass")[0].style.display = "none";
 
-                     document.getElementsByClassName("itemClass")[i].style.display = "none";
-
-                    }
-
-                }else
-                {
-
-                    document.getElementsByClassName("routeClass")[0].style.display = "none";
-
-
-                }
-              }, 1000);
+          }
+        }, 1000);
 
           
           
@@ -331,7 +358,6 @@ var longitude ;
         google.maps.event.addDomListener(window, 'load', initMap);
 
     }
-
 
       
         Polymer({
