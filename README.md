@@ -56,6 +56,6 @@ If you want view app, open navigator (firefox, chrome, ...) and visit localhost:
 2) build composer image
 3) run
 
-[code]
+~~~
 nohup docker-composer up &
-[code]
+~~~
