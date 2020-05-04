@@ -54,4 +54,8 @@ If you want view app, open navigator (firefox, chrome, ...) and visit localhost:
 ## PRODUCTION ENVIRONMENT
 1) checkout repository
 2) build composer image
-3) run: nohup docker-composer up
+3) run
+
+[code]
+nohup docker-composer up &
+[code]
