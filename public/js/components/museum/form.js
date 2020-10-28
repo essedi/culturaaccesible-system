@@ -43,10 +43,10 @@ Class('Museum.Form', {
         if (null == this.scheduleForm){
             this.scheduleForm = {};
         }
-        
+
         this.scheduleForm.scheduleData = this.storage;
-                
-           
+
+
         this.addListeners();
         this.loadEditInfo();
     },
@@ -120,6 +120,9 @@ Class('Museum.Form', {
                 case 'cat':
                     this.fillCatala(translations[i]);
                     break;
+                case 'it':
+                    this.fillItalian(translations[i]);
+                    break;
             }
         }
     },
@@ -147,7 +150,14 @@ Class('Museum.Form', {
         catala.toggleVisibility();
         catala.translation = language;
     },
-
+    fillItalian: function(language) {
+        var catala = this.languages.$.italian;
+        this.languages.italian = true;
+        document.getElementsByClassName('italian')[0].checked = true;
+        italian.visiblelang = 'true';
+        italian.toggleVisibility();
+        italian.translation = language;
+    },
     hide: function() {
         this.element.style.display = 'none';
     },
