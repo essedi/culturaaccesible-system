@@ -81,8 +81,16 @@
             <span class="slider round"></span>
           </label>
         </div>
+        <div class="language-switch">
+          <p>IT</p>
+          <label class="switch toggle-language-it">
+            <input type="checkbox" class="italian" on-change="toggleItalian" name="italian">
+            <span class="slider round"></span>
+          </label>
+        </div>
 
         <cuac-exhibition-language id="spanish" visiblelang="true" language="Castellano" locale="es"></cuac-exhibition-language>
+        <cuac-exhibition-language id="italian" visiblelang="false" language="Italiano" locale="it"></cuac-exhibition-language>
         <cuac-exhibition-language id="english" visiblelang="false" language="English" locale="en"></cuac-exhibition-language>
         <cuac-exhibition-language id="catala" visiblelang="false" language="Valencià" locale="cat"></cuac-exhibition-language>
     </template>
@@ -93,6 +101,7 @@
 
             properties: {
               english: { Type: Boolean, default: false },
+              italian: { Type: Boolean, default: false },
               catala: { Type: Boolean, default: false },
               spanish: { Type: Boolean, default: true }
             },
@@ -108,10 +117,16 @@
               this.$.catala.visiblelang = event.target.checked + '';
               this.$.catala.toggleVisibility();
             },
+            toggleItalian: function(event) {
+              this.italian = event.target.checked;
+              this.$.italian.visiblelang = event.target.checked + '';
+              this.$.italian.toggleVisibility();
+            },
 
             collectLocaleData: function() {
               var iso_codes = ['es'];
               if (this.english) { iso_codes.push('en') };
+              if (this.italian) { iso_codes.push('it') };
               if (this.catala) { iso_codes.push('cat') };
               return iso_codes
             }

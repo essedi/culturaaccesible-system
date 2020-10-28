@@ -7,7 +7,7 @@
         </style>
 
         <div class="panel panel-primary">
-            
+
             <div class="panel-heading">Info </div>
             <div class="panel-body">
                 <cuac-info-form id="info" info="{{museum.info}}"></cuac-info-form>
@@ -63,6 +63,7 @@
                 translations.push(this.$.languages.$.spanish.collectData());
                 if(this.$.languages.$.english.visiblelang === "true") translations.push(this.$.languages.$.english.collectData());
                 if(this.$.languages.$.catala.visiblelang === "true") translations.push(this.$.languages.$.catala.collectData());
+                if(this.$.languages.$.italian.visiblelang === "true") translations.push(this.$.languages.$.italian.collectData());
                 return translations;
             }
         });
