@@ -50,3 +50,12 @@ docker-compose exec system bundle exec rake test
 ~~~
 
 If you want view app, open navigator (firefox, chrome, ...) and visit localhost:4567
+
+## PRODUCTION ENVIRONMENT
+1) checkout repository
+2) build composer image
+3) run
+
+~~~
+nohup docker-composer up &
+~~~

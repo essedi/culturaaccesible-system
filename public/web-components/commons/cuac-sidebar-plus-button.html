@@ -14,9 +14,37 @@
                   type: Object
               },
               exhibition: {
-                  type: Object
+                  type: Object,  observer: '_idUpdate'
+
+              },
+              parent2: {
+                  type: "string",  observer: '_idUpdate2'
+
               },
             },
+            
+             _idUpdate: function(){
+                console.log(this.exhibition,"HELLO");
+
+                if(this.exhibition && this.exhibition.locationType == "gps")
+                 {
+
+                   this.coordsClass = 'show';
+                   this.beaconClass = 'hide';
+                   
+                 }else{
+                     
+                   this.coordsClass = 'hide';
+                   this.beaconClass = 'show';
+
+                 }
+              },
+              
+               _idUpdate2: function(){
+                console.log(this.parent2,"HELLO2");
+
+           
+              },
 
             goToItem: function(){
               var urlParent = '/' + this.parent.type + '/';
