@@ -14,33 +14,33 @@
             label{
               font-weight: normal;
             }
-            
+
              #map {
                 height: 400px;
                 width: 100%;
                 background-color: gray;
               }
         </style>
-     
+
         <form class$="form {{formVisibility}}">
-              
+
             <div class="checkbox" >
                 <label style="padding-right: 30px" for="show">
                     <input type="checkbox" name="show" checked="{{show::change}}">
                     Show
                 </label>
-           
+
                 <label style="padding-right: 30px" for="unlocked">
                     <input  type="checkbox" name="unlocked" checked="{{unlocked::change}}">
                     Unlock
                 </label>
-           
+
                 <label style="padding-right: 30px" for="premium">
                     <input  type="checkbox" name="premium" value="0" checked="{{premium::change}}" >
-                    Premium 
+                    Premium
                 </label>
             </div>
-          
+
             <div class$="form-group {{premiumClass}}" >
                 <label for="productId"><strong>Product Id</strong></label>
                 <input class="form-control" name="productId" value="{{productId::input}}">
@@ -68,27 +68,27 @@
                     <input type="checkbox" name="paint" value="paint" checked="{{paint::change}}">
                     Paint
                 </label>
-           
+
                 <label style="padding-right: 30px" for="sculpture">
                     <input  type="checkbox" name="sculpture" value="sculpture" checked="{{sculpture::change}}">
                     Sculpture
                 </label>
-               
+
                 <label style="padding-right: 30px" for="mixed-art">
                     <input  type="checkbox" name="mixed-art" value="mixed-art" checked="{{mixed_art::change}}">
                     Mixed Art
                 </label>
-           
+
                 <label style="padding-right: 30px" for="artist-exhibition">
                     <input  type="checkbox" name="artist-exhibition" value="artist-exhibition" checked="{{artist_exhibition::change}}">
                     Artist Exhibition
                 </label>
-           
+
                 <label style="padding-right: 30px" for="external-route">
                     <input  type="checkbox" name="external-route" value="external-route" checked="{{external_route::change}}">
                     External Route
                 </label>
-           
+
             </div>
             <hr>
             <div>
@@ -102,7 +102,7 @@
                     <input class="form-group" name="dateFinish" type="date" value="{{dateFinish::input}}">
                 </div>
             </div>
-              
+
             <div class="form-group" >
                 <label for="locationType">Location Type</label>
                 <select class="form-control" id="locationType" name="locationType" value="{{ locationType::change }}">
@@ -132,7 +132,7 @@
         </form>
     </template>
 
-    
+
     <script>
         var types = [];
 
@@ -140,10 +140,10 @@
             is: 'cuac-exhibition-form',
 
             ready: function() {
-                
+
                 urlLocation = window.location.pathname;
-                
-        
+
+
                 if ('/' == urlLocation)
                 {
                     this.formVisibility = 'hide';
@@ -151,7 +151,7 @@
                 {
                     this.formVisibility = 'show';
                 }
-                
+
             },
 
             properties: {
@@ -162,9 +162,9 @@
                 submitDisabled: {type: Boolean, value: true},
 
                 show: {type: Boolean, value: false},
-                
+
                 unlocked: {type: Boolean, value: false},
-                
+
                 premium :{type: Boolean , value: false, observer: 'premiumAction'},
 
                 exhibition: {type: Object, observer: 'storeId', reflectToAttribute: true},
@@ -172,7 +172,7 @@
                 edited: {type: Object, observer: 'fillForm'},
 
                 exhibitionId: {type: String},
-                
+
                 image: {
                   type: String,
                   observer: 'previewImage'
@@ -185,11 +185,11 @@
                 museumValue: {observer: 'isSubmittable'},
 
                 museums: {type: Array},
-                
+
                 general_description: {},
 
                 typeValue: {type: Array},
-                
+
                 type: { type: Array },
 
                 dateStart: {},
@@ -203,24 +203,24 @@
                 productId: { type: String  },
 
                 locationType: {type: String , observer: 'locationTypeAction'},
-                
+
                 paint: { type: Boolean, value: false, observer: 'paintChange' },
-                                
+
                 sculpture: {type: Boolean, value: false,  observer: 'sculptureChange' },
-                
+
                 mixed_art:  {type: Boolean, value: false,  observer: 'mixedArtChange' },
-                
+
                 artist_exhibition:  {type: Boolean, value: false,  observer: 'artistExhibitionChange' },
-                
+
                 external_route:  {type: Boolean, value: false,  observer: 'externalRouteChange' },
 
 
             },
-            
-            artistExhibitionChange: function() 
+
+            artistExhibitionChange: function()
             {
                 if(this.artist_exhibition == true ){
-                    
+
                    types.push("artist-exhibition");
 
                 }else{
@@ -233,14 +233,14 @@
                        types.splice(index, 1);
                     }
                 }
-                
+
                 this.type = types;
             },
-            
-            externalRouteChange: function() 
+
+            externalRouteChange: function()
             {
                 if(this.external_route == true ){
-                    
+
                    types.push("external-route");
 
                 }else{
@@ -253,15 +253,15 @@
                        types.splice(index, 1);
                     }
                 }
-                
+
                 this.type = types;
             },
-            
-            
-            mixedArtChange: function() 
+
+
+            mixedArtChange: function()
             {
                 if(this.mixed_art == true ){
-                    
+
                    types.push("mixed-art");
 
                 }else{
@@ -274,14 +274,14 @@
                        types.splice(index, 1);
                     }
                 }
-                
+
                 this.type = types;
             },
-            
-             paintChange: function() 
+
+             paintChange: function()
             {
                 if(this.paint == true ){
-                    
+
                    types.push("paint");
 
                 }else{
@@ -294,14 +294,14 @@
                        types.splice(index, 1);
                     }
                 }
-                
+
                 this.type = types;
             },
-            
-             sculptureChange: function() 
+
+             sculptureChange: function()
             {
                 if(this.sculpture == true){
-                    
+
                      types.push("sculpture");
 
                 }else{
@@ -313,17 +313,17 @@
                         types.splice(index, 1);
                      }
                 }
-                
+
                 this.type = types;
 
             },
-            
-         
-            storeId: function() 
+
+
+            storeId: function()
             {
                 this.exhibitionId = this.exhibition.id;
             },
-            
+
             premiumAction: function()
             {
                 if(this.premium == true)
@@ -332,12 +332,12 @@
               }
               else if(this.premium == false)
               {
-                  this.premiumClass = 'hide'; 
-              } 
+                  this.premiumClass = 'hide';
+              }
             },
-            
-           
-            checkName: function() 
+
+
+            checkName: function()
             {
                 this.nameLength = this.name.length;
             },
@@ -353,22 +353,22 @@
                     this.formVisibility = 'hide';
                 }
             },
-            
-           
+
+
 
             locationTypeAction: function() {
-                
+
               if(this.locationType == 'beacon')
               {
                   this.beaconClass = 'show';
               }
               else if(this.locationType == 'gps')
               {
-                  this.beaconClass = 'hide'; 
+                  this.beaconClass = 'hide';
               }
             },
-            
-            
+
+
             isSubmittable: function() {
                 var nameLength = this.nameHasValue() ? 0 : this.name.length;
                 var museumsLength = this.museumHasValue() ? 0 : this.museumValue.length;
@@ -396,23 +396,23 @@
             },
 
             previewImage: function() {
-                
+
                this.imageSource = this.image;
-               // check if is image 
-               if(this.imageSource.match(/\.(jpeg|jpg|gif|png)/) != null) 
+               // check if is image
+               if(this.imageSource.match(/\.(jpeg|jpg|gif|png)/) != null)
                {
                    console.log("true");
-                   
+
                }else
                {
                    console.log("false");
                    alert("not a valid image");
                }
-               
+
             },
 
             collectData: function() {
-                
+
                 data = {
                     id: this.exhibitionId,
                     show: this.show,
@@ -433,7 +433,7 @@
                     iso_codes: this.$.languages.collectLocaleData(),
                     translations: this.getTranslations()
                 };
-                
+
                 console.log(data, "dataaaa");
                 return data;
             },
@@ -445,7 +445,7 @@
 
             fillForm: function() {
 
-                
+
               this.exhibitionId = this.edited.id;
               this.name = this.edited.name;
               this.description = this.edited.description;
@@ -465,10 +465,10 @@
                 if(this.type.length > 0){
 
                     for(let item of this.type){
-                        
+
                        let name = item.toString();
-                       
-                       
+
+
                        switch (name) {
                         case "paint":
                               this.paint = true;
@@ -488,7 +488,7 @@
                       }
                     }
                 }
-                
+
               this.dateStart = this.translateEditedDate(this.edited.date_start);
               this.dateFinish = this.translateEditedDate(this.edited.date_finish);
               if ( typeof (this.edited.translations) != "undefined" ) {
@@ -511,6 +511,9 @@
                             break;
                         case 'cat':
                             this.fillCatala(translations[i]);
+                            break;
+                        case 'it':
+                            this.fillItalian(translations[i]);
                             break;
                     }
                 }
@@ -539,6 +542,14 @@
                 catala.toggleVisibility();
                 catala.translation = language;
             },
+            fillItalian: function(language) {
+                this.$.languages.italian = true;
+                var italian = this.$.languages.$.italian;
+                document.getElementsByClassName('italian')[0].checked = true;
+                italian.visiblelang = 'true';
+                italian.toggleVisibility();
+                italian.translation = language;
+            },
 
             formatDate: function(dateString) {
                 date = new Date(dateString);
@@ -560,15 +571,16 @@
                 translations.push(this.$.languages.$.spanish.collectData());
                 if(this.$.languages.$.english.visiblelang === "true") translations.push(this.$.languages.$.english.collectData());
                 if(this.$.languages.$.catala.visiblelang === "true") translations.push(this.$.languages.$.catala.collectData());
+                if(this.$.languages.$.italian.visiblelang === "true") translations.push(this.$.languages.$.italian.collectData());
                 return translations;
             }
-            
-            
+
+
 
 
         });
-        
-       
+
+
 
     </script>
 </dom-module>

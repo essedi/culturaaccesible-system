@@ -49,8 +49,6 @@ Class('Museum.Form', {
            
         this.addListeners();
         this.loadEditInfo();
-        
-        
     },
 
     addListeners: function() {
@@ -96,8 +94,6 @@ Class('Museum.Form', {
     },
 
     editMuseum: function(museum) {
-        
-        console.log(museum, "museum edit");
         this.museumData.id = museum.id;
         this.element.museum = museum;
         this.infoForm.setEditData();
@@ -113,8 +109,6 @@ Class('Museum.Form', {
     },
 
     fillLanguages: function(translations) {
-        
-        console.log(translations, "translations");
         for (var i=0; i<translations.length; i++) {
             switch (translations[i].iso_code) {
                 case 'es':
@@ -126,13 +120,9 @@ Class('Museum.Form', {
                 case 'cat':
                     this.fillCatala(translations[i]);
                     break;
-                 case 'newLanguage':
-                    this.fillNewLanguage(translations[i]);
+                case 'it':
+                    this.fillItalian(translations[i]);
                     break;
-                case 'newLanguage2':
-                    this.fillNewLanguage2(translations[i]);
-                    break;
-             
             }
         }
     },
@@ -160,32 +150,14 @@ Class('Museum.Form', {
         catala.toggleVisibility();
         catala.translation = language;
     },
-    
-    
-    fillNewLanguage: function(language) {
-        var newLanguage = this.languages.$.newLanguage;
-        this.languages.newLanguage = true;
-        document.getElementsByClassName('newLanguage')[0].checked = true;
-        newLanguage.visiblelang = 'true';
-        newLanguage.toggleVisibility();
-        newLanguage.translation = language;
-        newLanguage.title = language.title;
-
-
+    fillItalian: function(language) {
+        var catala = this.languages.$.italian;
+        this.languages.italian = true;
+        document.getElementsByClassName('italian')[0].checked = true;
+        italian.visiblelang = 'true';
+        italian.toggleVisibility();
+        italian.translation = language;
     },
-    
-    fillNewLanguage2: function(language) {
-        var newLanguage2 = this.languages.$.newLanguage2;
-        this.languages.newLanguage2 = true;
-        document.getElementsByClassName('newLanguage2')[0].checked = true;
-        newLanguage2.visiblelang = 'true';
-        newLanguage2.toggleVisibility();
-        newLanguage2.translation = language;
-        newLanguage2.title = language.title;
-
-
-    },
-
     hide: function() {
         this.element.style.display = 'none';
     },
