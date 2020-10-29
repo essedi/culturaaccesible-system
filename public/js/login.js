@@ -1,7 +1,11 @@
-main();
+window.mainInterval = setInterval(function(){
+  if(window.CustomElements.ready)
+  {
+    main();
+    clearInterval(window.mainInterval);
+  }
+}, 500);
 
 function main() {
-    document.addEventListener('DOMContentLoaded', function() {
         new Page.Login();
-    });
 }
