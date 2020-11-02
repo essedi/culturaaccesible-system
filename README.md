@@ -52,6 +52,10 @@ docker-compose exec system bundle exec rake test
 If you want view app, open navigator (firefox, chrome, ...) and visit localhost:4567
 
 ## PRODUCTION ENVIRONMENT
+Connnect trough ssh using CulturaAccesibleEssedi.pem private key
+
+ssh -i "CulturaAccesibleEssedi.pem" ubuntu@ec2-54-198-129-130.compute-1.amazonaws.com
+
 1) checkout repository
 2) build composer image
 3) run
