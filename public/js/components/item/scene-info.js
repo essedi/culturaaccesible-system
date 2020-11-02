@@ -26,7 +26,7 @@ Class('Scene.Info', {
         this.element.scene = scene;
     },
 
-    loadScene: function() {
+    loadScene: function(exhibition = {}) {
       var id = this.getSceneId();
       var exhibitionId = this.loadShortUrlData(3);
 

@@ -29,7 +29,10 @@ module Items
         data = connection.items.find({id: id}).first
         item = create_item( data ).serialize
         item_translation = connection.item_translations.find({item_id: id, iso_code: iso_code}).first
-        translated_item = Items::Translation.from_bson(item_translation, id , item_translation['item_id']).serialize
+        translated_item = {}
+        if item_translation then
+          translated_item = Items::Translation.from_bson(item_translation, id , item_translation['item_id']).serialize
+        end
         item.each do |key, value|
           item[key] = translated_item[key] if translated_item[key]
         end

@@ -42,7 +42,10 @@ module Exhibitions
         data = connection.exhibitions.find({id: id}).first
         exhibition = Exhibition.from_bson(data, data['id'], data['order']).serialize
         exhibition_translation = find_traslation(id, iso_code)
-        translated_exhibition = Exhibitions::Translation.from_bson(exhibition_translation, exhibition_translation['exhibition_id'], id).serialize
+        translated_exhibition = {}
+        if exhibition_translation then
+          translated_exhibition = Exhibitions::Translation.from_bson(exhibition_translation, exhibition_translation['exhibition_id'], id).serialize
+        end
         exhibition.each do |key, value|
           exhibition[key] = translated_exhibition[key] if translated_exhibition[key]
         end
@@ -120,7 +123,7 @@ module Exhibitions
         updated_translation = connection.exhibition_translations.find_one_and_update({ id: translation['id'] }, { "$set" => translation }, {:return_document => :after })
         Exhibitions::Translation.from_bson(updated_translation, updated_translation['exhibition_id'], updated_translation['id']).serialize
       end
-      
+
       def flush
         connection.exhibitions.delete_many
       end
